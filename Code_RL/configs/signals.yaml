@@ -1,0 +1,23 @@
+# Traffic Signal Configuration
+signals:
+  # Phase definitions (ordered list, non-conflicting movements)
+  phases:
+    - id: 0
+      name: "north_south"
+      description: "North-South green, East-West red"
+      movements: ["north_through", "south_through", "north_left", "south_left"]
+      
+    - id: 1
+      name: "east_west"
+      description: "East-West green, North-South red"
+      movements: ["east_through", "west_through", "east_left", "west_left"]
+  
+  # Timing constraints (in seconds)
+  timings:
+    min_green: 10.0      # Minimum green time
+    max_green: 120.0     # Maximum green time (fail-safe)
+    yellow: 3.0          # Yellow light duration
+    all_red: 2.0         # All-red clearance time
+    
+  # Initial state
+  initial_phase: 0       # Starting phase ID

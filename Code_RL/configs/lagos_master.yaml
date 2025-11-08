@@ -1,0 +1,15 @@
+experiment:
+  configs:
+    endpoint: endpoint.yaml
+    environment: env_lagos.yaml
+    network: network_real.yaml
+    signals: signals_lagos.yaml
+    traffic: traffic_lagos.yaml
+  description: "Contr\xF4le de signaux RL pour Victoria Island Lagos"
+  location: Lagos, Nigeria
+  name: Lagos_Victoria_Island
+  parameters:
+    algorithm: DQN
+    evaluation_freq: 5000
+    save_freq: 10000
+    timesteps: 50000

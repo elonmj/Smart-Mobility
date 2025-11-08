@@ -1,0 +1,73 @@
+# Network topology configuration
+network:
+  # Victoria Island corridor study area
+  name: "victoria_island_corridor"
+  description: "Akin Adesola & Adeola Odeku intersection"
+  
+  # Observed branches (mapping to ARZ simulator segments)
+  branches:
+    # North approach (Akin Adesola from north)
+    - id: "north_in"
+      name: "Akin Adesola North Inbound"
+      segment_id: "arz_seg_001"
+      direction: "south"
+      lanes: 3
+      length: 200.0  # meters
+      
+    - id: "north_out"
+      name: "Akin Adesola North Outbound"
+      segment_id: "arz_seg_002"
+      direction: "north"
+      lanes: 3
+      length: 200.0
+      
+    # South approach
+    - id: "south_in"
+      name: "Akin Adesola South Inbound"
+      segment_id: "arz_seg_003"
+      direction: "north"
+      lanes: 3
+      length: 200.0
+      
+    - id: "south_out"
+      name: "Akin Adesola South Outbound"
+      segment_id: "arz_seg_004"
+      direction: "south"
+      lanes: 3
+      length: 200.0
+      
+    # East approach (Adeola Odeku from east)
+    - id: "east_in"
+      name: "Adeola Odeku East Inbound"
+      segment_id: "arz_seg_005"
+      direction: "west"
+      lanes: 3
+      length: 200.0
+      
+    - id: "east_out"
+      name: "Adeola Odeku East Outbound"
+      segment_id: "arz_seg_006"
+      direction: "east"
+      lanes: 3
+      length: 200.0
+      
+    # West approach
+    - id: "west_in"
+      name: "Adeola Odeku West Inbound"
+      segment_id: "arz_seg_007"
+      direction: "east"
+      lanes: 3
+      length: 200.0
+      
+    - id: "west_out"
+      name: "Adeola Odeku West Outbound"
+      segment_id: "arz_seg_008"
+      direction: "west"
+      lanes: 3
+      length: 200.0
+  
+  # Intersection configuration
+  intersection:
+    center_lat: 6.431108
+    center_lon: 3.423805
+    type: "signalized"

@@ -1,0 +1,80 @@
+network:
+  branches:
+  - capacity_per_lane: 1800
+    highway_type: primary
+    id: intersection_1_north_in
+    lanes: 3
+    length: 9.0
+    name: Akin Adesola Street - north (incoming)
+    speed_limit_kmh: 50
+    street_name: Akin Adesola Street
+    type: incoming
+  - capacity_per_lane: 1500
+    highway_type: secondary
+    id: intersection_1_south_in
+    lanes: 2
+    length: 74.3
+    name: Adeola Odeku Street - south (incoming)
+    speed_limit_kmh: 40
+    street_name: Adeola Odeku Street
+    type: incoming
+  - capacity_per_lane: 1500
+    highway_type: secondary
+    id: intersection_1_north_out
+    lanes: 2
+    length: 11.0
+    name: Adeola Odeku Street - north (outgoing)
+    speed_limit_kmh: 40
+    street_name: Adeola Odeku Street
+    type: outgoing
+  - capacity_per_lane: 1800
+    highway_type: primary
+    id: intersection_1_south_out
+    lanes: 3
+    length: 231.5
+    name: Akin Adesola Street - south (outgoing)
+    speed_limit_kmh: 50
+    street_name: Akin Adesola Street
+    type: outgoing
+  - capacity_per_lane: 1800
+    highway_type: primary
+    id: intersection_2_north_in
+    lanes: 3
+    length: 207.5
+    name: Akin Adesola Street - north (incoming)
+    speed_limit_kmh: 50
+    street_name: Akin Adesola Street
+    type: incoming
+  - capacity_per_lane: 1500
+    highway_type: secondary
+    id: intersection_2_south_in
+    lanes: 2
+    length: 11.0
+    name: Adeola Odeku Street - south (incoming)
+    speed_limit_kmh: 40
+    street_name: Adeola Odeku Street
+    type: incoming
+  - capacity_per_lane: 1500
+    highway_type: secondary
+    id: intersection_2_north_out
+    lanes: 2
+    length: 74.2
+    name: Adeola Odeku Street - north (outgoing)
+    speed_limit_kmh: 40
+    street_name: Adeola Odeku Street
+    type: outgoing
+  - capacity_per_lane: 1800
+    highway_type: primary
+    id: intersection_2_south_out
+    lanes: 3
+    length: 9.0
+    name: Akin Adesola Street - south (outgoing)
+    speed_limit_kmh: 50
+    street_name: Akin Adesola Street
+    type: outgoing
+  description: "R\xE9seau bas\xE9 sur les donn\xE9es r\xE9elles du corridor Lagos"
+  location:
+    area: Victoria Island
+    city: Lagos
+    country: Nigeria
+  name: Victoria Island Lagos - Real Data

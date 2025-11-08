@@ -1,0 +1,39 @@
+# Grid parameters (required by SimulationRunner)
+N: 200           # Number of cells in spatial grid
+xmin: 0.0        # Grid start (km)
+xmax: 20.0       # Grid end (km) - 20 km represents Victoria Island corridor
+
+# Simulation time parameters (required by SimulationRunner)
+t_final: 3600.0  # Total simulation time (seconds) = 1 hour
+output_dt: 15.0  # Output/decision timestep (seconds) - matches dt_decision
+
+environment:
+  context: Victoria Island Lagos
+  dt_decision: 15.0  # Changed from 10.0 (Bug #27 fix, 4x improvement validated)
+  episode_length: 3600
+  max_steps: 240     # Changed from 360 (3600s / 15s = 240 steps per episode)
+  # Episode duration: 240 steps × 15s = 3600s = 1 hour
+  # Alignment with validation_ch7 Bug #27 fix (Chu et al. 2020: 15s optimal for urban)
+  normalization:
+    phase_time_max: 120
+    queue_max: 50
+    rho_max_cars: 120
+    rho_max_motorcycles: 250
+    v_free_cars: 28
+    v_free_motorcycles: 32
+  observation:
+    ewma_alpha: 0.3
+    include_densities: true
+    include_phase_timing: true
+    include_queues: true
+    include_speeds: true
+  reward:
+    reward_clip:
+    - -5.0
+    - 5.0
+    stop_speed_threshold: 5.0
+    w_queue_length: 0.6
+    w_stops: 0.4
+    w_switch_penalty: 0.08
+    w_throughput: 1.0
+    w_wait_time: 1.2

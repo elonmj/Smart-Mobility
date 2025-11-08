@@ -1,0 +1,33 @@
+signals:
+  context: Victoria Island Lagos
+  intersection_type: urban_arterial
+  phases:
+  - description: Akin Adesola Nord-Sud vert
+    id: 0
+    movements:
+    - north_through
+    - south_through
+    - north_left
+    - south_left
+    name: akin_adesola_ns
+  - description: Adeola Odeku Est-Ouest vert
+    id: 1
+    movements:
+    - east_through
+    - west_through
+    - east_left
+    - west_left
+    name: adeola_odeku_ew
+  safety:
+    clearance_lost_time: 2.5
+    pedestrian_clearance: 8.0
+    startup_lost_time: 3.5
+    vehicle_clearance: 4.0
+  timings:
+    min_green: 15.0      # Minimum green time - adapté trafic dense Lagos
+    max_green: 90.0      # Maximum green time (fail-safe)
+    yellow: 4.0          # Yellow light duration - sécurité piétons Lagos
+    all_red: 3.0         # All-red clearance time - intersection dense
+    
+  # Initial state - commence par Akin Adesola (axe principal)  
+  initial_phase: 0       # Starting phase ID

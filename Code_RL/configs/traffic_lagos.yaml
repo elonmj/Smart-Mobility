@@ -1,0 +1,28 @@
+traffic:
+  behaviors:
+    creeping_rate: 0.6
+    gap_filling_rate: 0.8
+    interweaving_rate: 0.7
+    patience_factor: 0.4
+    signal_compliance: 0.7
+  context: Victoria Island Lagos
+  description: "Param\xE8tres adapt\xE9s au trafic urbain dense de Lagos"
+  free_speeds:
+    average: 30
+    cars: 28
+    motorcycles: 32
+  max_densities:
+    cars: 120
+    motorcycles: 250
+    total: 370
+  timing:
+    all_red_time: 2.0
+    clearance_lost_time: 2.0
+    reaction_time: 1.2
+    startup_lost_time: 3.5
+    yellow_time: 3.0
+  vehicle_mix:
+    buses_percentage: 15
+    cars_percentage: 45
+    motorcycles_percentage: 35
+    trucks_percentage: 5

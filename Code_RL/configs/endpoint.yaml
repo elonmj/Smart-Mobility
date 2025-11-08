@@ -1,0 +1,17 @@
+# Endpoint Configuration for ARZ Simulator
+endpoint:
+  protocol: "http"  # http, ipc, or py-binding
+  host: "localhost"
+  port: 8080
+  base_url: "/api/v1/arz"
+  
+  # Simulation parameters
+  dt_sim: 0.5  # Simulation timestep in seconds (≤ 1s)
+  
+  # Connection settings
+  timeout: 30.0  # seconds
+  max_retries: 3
+  retry_backoff: 1.0  # seconds
+  
+  # Health check
+  health_check_interval: 60.0  # seconds

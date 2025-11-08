@@ -1,0 +1,1837 @@
+﻿<!DOCTYPE html>
+<html lang='fr'>
+<head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>Jumeau Numérique du Trafic Routier + RL</title>
+    <link rel='preconnect' href='https://fonts.googleapis.com'>
+    <link rel='preconnect' href='https://fonts.gstatic.com' crossorigin>
+    <link
+        href='https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Poppins:wght@300;500;700&display=swap'
+        rel='stylesheet'>
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.6.0/css/all.min.css'>
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reset.css'>
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.css'>
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/theme/night.css'>
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/monokai.css'>
+    <style>
+        :root {
+            --brand-primary: #38ef7d;
+            --brand-secondary: #667eea;
+            --brand-accent: #f39c12;
+        }
+
+        .reveal {
+            font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+            font-size: 32px;
+        }
+
+        .reveal h1,
+        .reveal h2,
+        .reveal h3 {
+            text-transform: none;
+            font-family: 'Poppins', 'Inter', sans-serif;
+            letter-spacing: .2px;
+        }
+
+        .reveal h1 {
+            font-size: 2.2em;
+            line-height: 1.2;
+        }
+
+        .reveal h2 {
+            font-size: 1.6em;
+            line-height: 1.3;
+        }
+
+        .reveal h3 {
+            font-size: 1.2em;
+            line-height: 1.4;
+        }
+
+        .reveal p {
+            margin: 20px 0;
+            line-height: 1.5;
+        }
+
+        .reveal .problem {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+
+        .reveal .solution {
+            color: #2ecc71;
+            font-weight: bold;
+        }
+
+        .reveal .highlight {
+            color: #f39c12;
+            font-weight: bold;
+        }
+
+        .reveal .big-number {
+            font-size: 2em;
+            color: #3498db;
+            font-weight: bold;
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .video-container iframe {
+            width: 100%;
+            height: 450px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .stat-box {
+            background: linear-gradient(145deg, rgba(52, 152, 219, .15), rgba(52, 152, 219, .05));
+            padding: 20px;
+            border-radius: 16px;
+            backdrop-filter: blur(6px);
+            border: 1px solid rgba(255, 255, 255, .08);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, .15);
+        }
+
+        .demo-box {
+            background: linear-gradient(145deg, rgba(46, 204, 113, .15), rgba(46, 204, 113, .05));
+            padding: 26px;
+            border-radius: 16px;
+            margin: 18px 0;
+            border: 1px solid rgba(255, 255, 255, .06);
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 14px;
+            border-radius: 999px;
+            background: rgba(0, 0, 0, .25);
+            border: 1px solid rgba(255, 255, 255, .06);
+            font-size: .65em;
+            letter-spacing: .3px;
+        }
+
+        .glow {
+            text-shadow: 0 0 12px rgba(56, 239, 125, .6), 0 0 24px rgba(102, 126, 234, .35);
+        }
+
+        .reveal .progress {
+            height: 6px;
+        }
+
+        .reveal .progress span {
+            background: linear-gradient(90deg, var(--brand-secondary), var(--brand-primary));
+        }
+
+        /* Responsive font scaling */
+        @media screen and (max-width: 1024px) {
+            .reveal {
+                font-size: 28px;
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            .reveal {
+                font-size: 24px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .video-container iframe {
+                height: 300px;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .reveal {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class='reveal'>
+        <div class='slides'>
+
+            <!-- SLIDE 1: TITRE IMPACTANT -->
+            <section
+                data-background-image='https://images.unsplash.com/photo-1493238792000-8113da705763?q=80&w=1920&auto=format&fit=crop'
+                data-background-opacity='0.25'
+                data-background-gradient='linear-gradient(to bottom, rgba(30,60,114,.95), rgba(42,82,152,.65))'
+                data-background-transition='zoom'>
+                <div class='badge'><i class='fa-solid fa-traffic-light'></i> Mobilité Intelligente • Bénin</div>
+                <h1 class='glow' style='font-size: 3.2em; margin-bottom: 15px;'>Àlì Bí</h1>
+                <h2 style='font-size: 1.5em; color: #ecf0f1; font-weight: 300; margin-bottom: 20px;'>Àlì Bí - La voie
+                    intelligente</h2>
+                <h3 style='font-size: 1.2em; margin-top: 30px;'>🚦 Réinventer la Mobilité Urbaine grâce à l'IA</h3>
+                <p class='fragment' style='font-size: 0.8em; margin-top: 25px; color: #dfe6e9;'>Une innovation conçue
+                    pour le contexte béninois</p>
+            </section>
+
+            <!-- SLIDE 2: STORYTELLING - L'HISTOIRE DE SIKA -->
+            <section data-background-image='IMG-20251107-WA0015.jpg' data-background-opacity='0.15'
+                data-background-color='#0a0a0a' data-background-size='cover' data-background-position='center'>
+
+                <!-- Titre émotionnel -->
+                <h2 style='font-size: 1.3em; margin-bottom: 20px; color: #ecf0f1; font-weight: 300;'>
+                    💔 Quand 30 Minutes Changent Une Vie
+                </h2>
+
+                <!-- L'histoire de Sika avec timeline visuelle -->
+                <div style='max-width: 900px; margin: 0 auto;'>
+
+                    <!-- Introduction - Le personnage -->
+                    <div class='fragment'
+                        style='margin-bottom: 25px; padding: 18px; background: linear-gradient(145deg, rgba(142, 68, 173, 0.15), rgba(142, 68, 173, 0.05)); border-radius: 12px; border-left: 4px solid #9b59b6;'>
+                        <p style='font-size: 0.95em; line-height: 1.4; color: #ecf0f1; margin: 0;'>
+                            <strong style='color: #e1bee7; font-size: 1.1em;'>Sika</strong>, une femme enceinte vivant à
+                            Calavi,
+                            ressent des contractions bien avant le terme prévu.
+                        </p>
+                    </div>
+
+                    <!-- Timeline des événements -->
+                    <div style='position: relative; padding-left: 45px; margin: 20px 0;'>
+
+                        <!-- Point 1: Départ -->
+                        <div class='fragment' style='position: relative; margin-bottom: 25px;'>
+                            <div
+                                style='position: absolute; left: -45px; width: 35px; height: 35px; background: linear-gradient(135deg, #2ecc71, #27ae60); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1em; box-shadow: 0 0 12px rgba(46, 204, 113, 0.5);'>
+                                🏠
+                            </div>
+                            <div
+                                style='padding: 15px 18px; background: rgba(46, 204, 113, 0.12); border-radius: 10px; border-left: 3px solid #2ecc71;'>
+                                <p style='font-size: 0.85em; color: #2ecc71; font-weight: bold; margin: 0 0 5px 0;'>
+                                    Départ Urgent
+                                </p>
+                                <p style='font-size: 0.8em; color: #a8e6c1; margin: 0; line-height: 1.3;'>
+                                    Direction l'hôpital de zone de Mènontin — Trajet prévu : 25 minutes
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Point 2: Le feu d'IITA - Le drame -->
+                        <div class='fragment' style='position: relative; margin-bottom: 25px;'>
+                            <div
+                                style='position: absolute; left: -45px; width: 35px; height: 35px; background: linear-gradient(135deg, #f39c12, #e67e22); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1em; box-shadow: 0 0 12px rgba(243, 156, 18, 0.5);'>
+                                🚦
+                            </div>
+                            <div
+                                style='padding: 15px 18px; background: rgba(243, 156, 18, 0.12); border-radius: 10px; border-left: 3px solid #f39c12;'>
+                                <p style='font-size: 0.85em; color: #f39c12; font-weight: bold; margin: 0 0 5px 0;'>
+                                    Feu d'IITA — Embouteillage Massif
+                                </p>
+                                <p style='font-size: 0.8em; color: #d4a373; margin: 0 0 8px 0; line-height: 1.3;'>
+                                    Trafic complètement bloqué ce jour-là
+                                </p>
+                                <p style='font-size: 1.1em; color: #e67e22; font-weight: bold; margin: 0;'>
+                                    ⏱️ +30 minutes d'attente supplémentaires
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Call to action émotionnel -->
+                    <p class='fragment'
+                        style='margin-top: 25px; font-size: 1.05em; color: #f39c12; font-weight: bold; line-height: 1.3;'>
+                        → Combien de Sika sur nos routes chaque jour ?<br>
+                        <span style='font-size: 0.85em; color: #95a5a6;'>Derrière chaque embouteillage, il y a des vies
+                            en jeu.</span>
+                    </p>
+                </div>
+            </section>
+
+            <!-- SLIDE 4: LA CAUSE - FEUX STATIQUES -->
+            <section
+                data-background-image='https://images.unsplash.com/photo-1519003722824-194d4455a60c?q=80&w=1920&auto=format&fit=crop'
+                data-background-opacity='0.15' data-background-color='#1a1a1a'>
+                <h2 style='font-size: 1.3em; margin-bottom: 10px;'>🚦 Quelle est la Cause Principale ?</h2>
+                <!-- <h3 style='margin-bottom: 15px; color: #e74c3c; font-size: 0.9em;'>Des Feux de Signalisation Prisonniers
+                    du XXe Siècle</h3> -->
+
+                <div style='max-width: 950px; margin: 0 auto; font-size: 0.8em;'>
+                    <div class='fragment'
+                        style='margin: 12px 0; padding: 15px 20px; background: rgba(231, 76, 60, 0.2); border-radius: 10px; border: 2px solid rgba(231, 76, 60, 0.5);'>
+                        <h3 style='margin: 0 0 8px 0; color: #e74c3c; font-size: 1.15em;'>❌ Les Feux Actuels Sont
+                            AVEUGLES</h3>
+                        <p style='font-size: 0.95em; line-height: 1.4; margin: 0;'>
+                            Cycles figés qui <strong>ignorent totalement</strong> la réalité du trafic • Incapables de
+                            réagir
+                        </p>
+                    </div>
+
+                    <div class='fragment'
+                        style='margin: 12px 0; padding: 15px 20px; background: rgba(243, 156, 18, 0.2); border-radius: 10px; border: 2px solid rgba(243, 156, 18, 0.5);'>
+                        <h3 style='margin: 0 0 8px 0; color: #f39c12; font-size: 1.15em;'>⏱️ Les Conséquences</h3>
+                        <p style='font-size: 0.95em; line-height: 1.4; margin: 0;'>→ Attente inutile • Bouchons •
+                            Congestion croissante</p>
+                    </div>
+
+                    <!-- <div class='fragment'
+                        style='margin: 12px 0; padding: 14px 18px; background: rgba(46, 204, 113, 0.15); border-radius: 8px; border-left: 4px solid #2ecc71;'>
+                        <p style='font-size: 1em; margin: 0; line-height: 1.3;'>
+                            <strong style='color: #2ecc71;'>💡 Le problème :</strong> Des feux incapables de
+                            <strong>voir, d'apprendre ou de s'adapter</strong>
+                        </p>
+                    </div> -->
+                </div>
+
+                <p class='fragment'
+                    style='margin-top: 18px; font-size: 1.2em; color: var(--brand-primary); font-weight: bold;'>
+                    → Nos feux sont aveugles.<br>
+                    <span style='font-size: 1.15em;'>Donnons-leur des <em>yeux</em>.</span>
+                </p>
+            </section>
+
+            <!-- SLIDE 3: LE PROBLÈME - MINIMALISTE -->
+            <section
+                data-background-image='https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=1920&auto=format&fit=crop'
+                data-background-opacity='0.12' data-background-color='#2c3e50'>
+
+                <!-- LA QUESTION (seule, en grand) -->
+                <div style='margin: 30px auto 40px; max-width: 900px;'>
+                    <p style='font-size: 1.5em; color: #ecf0f1; line-height: 1.3; font-weight: 300;'>
+                        Combien coûte vraiment le trafic à Cotonou ?
+                    </p>
+                </div>
+
+                <!-- LES STATS PRINCIPALES (3 colonnes) -->
+                <div class='fragment'
+                    style='display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 35px; max-width: 1100px; margin: 40px auto;'>
+                    <!-- Décès routiers -->
+                    <div>
+                        <div style='font-size: 3.2em; font-weight: bold; color: #e74c3c; line-height: 1;'>~3 700</div>
+                        <p style='font-size: 1.1em; margin-top: 15px; color: #ecf0f1;'><strong>décès routiers</strong>
+                            par an</p>
+                        <p style='font-size: 0.8em; color: #95a5a6; margin-top: 10px;'>27.3 morts / 100 000 habitants
+                        </p>
+                    </div>
+                    <!-- Temps perdu -->
+                    <div>
+                        <div style='font-size: 3.2em; font-weight: bold; color: #e67e22; line-height: 1;'>50-60h</div>
+                        <p style='font-size: 1.1em; margin-top: 15px; color: #ecf0f1;'>perdues <strong>chaque
+                                année</strong></p>
+                        <p style='font-size: 0.8em; color: #95a5a6; margin-top: 10px;'>dans les embouteillages urbains
+                        </p>
+                    </div>
+                    <!-- Coût économique -->
+                    <div>
+                        <div style='font-size: 3.2em; font-weight: bold; color: #f39c12; line-height: 1;'>200M$</div>
+                        <p style='font-size: 1.1em; margin-top: 15px; color: #ecf0f1;'>d'<strong>investissement</strong>
+                        </p>
+                        <p style='font-size: 0.8em; color: #95a5a6; margin-top: 10px;'>Banque Mondiale pour la mobilité
+                        </p>
+                    </div>
+                </div>
+
+                <!-- CONTEXTE BÉNIN -->
+                <div class='fragment'
+                    style='margin-top: 45px; max-width: 900px; margin-left: auto; margin-right: auto;'>
+                    <p style='font-size: 1em; color: #bdc3c7; line-height: 1.5;'>
+                        Aux heures de pointe,
+                        Un trajet de 15 min peut en prendre <strong style='color: #e74c3c;'>45 à 60 min</strong>.
+                    </p>
+                </div>
+
+                <!-- SOURCE -->
+                <p class='fragment'
+                    style='font-size: 0.55em; color: #7f8c8d; margin-top: 40px; font-style: italic; line-height: 1.4;'>
+                    Sources : <a href="https://www.who.int/publications/m/item/road-safety-ben-2023-country-profile"
+                        target="_blank" style="color: #3498db; text-decoration: underline;">OMS - Rapport Sécurité
+                        Routière Bénin 2023</a> •
+                    <a href="https://www.worldbank.org/en/news/press-release/2025/05/20/benin-developing-a-safe-reliable-and-less-polluting-public-transport"
+                        target="_blank" style="color: #3498db; text-decoration: underline;">Banque Mondiale - Projet
+                        Mobilité Urbaine Bénin 2025</a> •
+                    <a href="https://guardian.ng/features/west-africas-transportation-crisis-why-cities-are-failing-to-plan-for-the-future/"
+                        target="_blank" style="color: #3498db; text-decoration: underline;">The Guardian - Congestion
+                        urbaine Afrique de l'Ouest 2025</a>
+                </p>
+            </section>
+
+
+
+            <!-- SLIDE 4: LA SOLUTION (TRANSITION DRAMATIQUE) -->
+            <section
+                data-background-image='https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1920&auto=format&fit=crop'
+                data-background-opacity='0.2'
+                data-background-gradient='linear-gradient(to right, rgba(17,153,142,0.85), rgba(56,239,125,0.85))'
+                data-auto-animate>
+                <h2 data-id='title-solution'>Àlì Bí</h2>
+                <h1 data-id='main-key' class='glow' style='font-size: 2.8em;'>CONTROLEUR IA DES CARREFOURS</h1>
+                <p data-id='sub-key' style='font-size: 1.1em;'>Optimisation des feux en temps réel</p>
+                <p style='font-size: 0.85em; margin-top: 20px; color: #95a5a6;'>
+                    L'Intelligence au Service de la Mobilité
+                </p>
+            </section>
+
+            <!-- SLIDE 5: QU'EST-CE QU'UN JUMEAU NUMÉRIQUE ?
+            <section
+                data-background-image='https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1920&auto=format&fit=crop'
+                data-background-opacity='0.15' data-auto-animate>
+                <h2 data-id='title-solution'>🔮 Le Jumeau Numérique : Qu'est-ce Que C'est ?</h2>
+                <div style='display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;'>
+                    <div>
+                        <h3>Monde Réel</h3>
+                        <p>🏙️ Routes<br>🚗 Véhicules<br>🚦 Feux tricolores</p>
+                    </div>
+                    <div>
+                        <h3>Monde Virtuel</h3>
+                        <p>💻 Simulation<br>📊 Flux de données<br>🤖 IA apprenante</p>
+                    </div>
+                </div>
+                <p class='fragment' style='margin-top: 40px; font-size: 1.3em; color: #2ecc71;'>
+                    Un laboratoire virtuel pour <strong>optimiser avant de déployer</strong> !
+                </p>
+            </section> -->
+
+            <!-- SLIDE 6: COMPRENDRE LE JUMEAU NUMÉRIQUE -->
+            <!-- <section
+                data-background-image='https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=1920&auto=format&fit=crop'
+                data-background-opacity='0.15' data-background-color='#000000'>
+               
+                <p style='font-size: 0.9em; margin-bottom: 25px; color: #ecf0f1;'>
+                    Du monde réel au monde virtuel : le principe du jumeau numérique
+                </p>
+
+              
+                <div
+                    style='display: grid; grid-template-columns: 1fr 1fr; gap: 30px; max-width: 1100px; margin: 0 auto;'>
+                    
+                    <div class='fragment'>
+                        <div
+                            style='background: rgba(52, 152, 219, 0.15); padding: 20px; border-radius: 12px; border: 2px solid rgba(52, 152, 219, 0.5);'>
+                            <h3 style='margin: 0 0 15px 0; color: #3498db; font-size: 1.1em;'>
+                                🏙️ Monde Réel
+                            </h3>
+                            <img src='cotonou_traffic.gif' alt='Trafic réel à Cotonou'
+                                style='border-radius: 10px; width: 100%; box-shadow: 0 8px 30px rgba(0,0,0,0.4);'>
+                            <p style='font-size: 0.75em; margin-top: 12px; color: #ecf0f1;'>
+                                Observation du trafic à Cotonou
+                            </p>
+                        </div>
+                    </div>
+
+                    
+                    <div class='fragment'>
+                        <div
+                            style='background: rgba(155, 89, 182, 0.15); padding: 20px; border-radius: 12px; border: 2px solid rgba(155, 89, 182, 0.5);'>
+                            <h3 style='margin: 0 0 15px 0; color: #9b59b6; font-size: 1.1em;'>
+                                💻 Monde Virtuel
+                            </h3>
+                            <img src='sumo_simulation.gif' alt='Simulation de trafic'
+                                style='border-radius: 10px; width: 100%; box-shadow: 0 8px 30px rgba(0,0,0,0.4);'>
+                            <p style='font-size: 0.6em; margin-top: 12px; color: #ecf0f1;'>
+                                Modélisation numérique d'un quelconque carrefour giratoire
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <p class='fragment'
+                    style='margin-top: 30px; font-size: 1.1em; color: var(--brand-primary); font-weight: bold;'>
+                    → On recrée la réalité dans un environnement virtuel où l'on peut expérimenter
+                </p>
+            </section>  -->
+
+            <!-- SLIDE 7: COMMENT ÇA MARCHE ? -->
+            <!-- <section
+                data-background-image='https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=1920&auto=format&fit=crop'
+                data-background-opacity='0.08' data-auto-animate>
+                <h2>⚙️ Le Fonctionnement en 4 Étapes</h2>
+                <div style='text-align: left; font-size: 0.9em;'>
+                    <div class='fragment demo-box'>
+                        <strong> Acquisition des Données</strong><br>
+                        API TomTom = Flux de trafic en temps réel
+                    </div>
+
+                    <div class='fragment demo-box'>
+                        <strong> Modélisation </strong><br>
+                        On simule le flux et la densité du réseau routier grâce à notre modèle mathématique.
+                    </div>
+
+                    <div class='fragment demo-box'>
+                        <strong>Optimisation par IA</strong><br>
+                        L'algorithme teste des millions de configurations simulées pour trouver la stratégie optimale
+                    </div>
+                    <div class='fragment demo-box'>
+                        <strong> Déploiement Terrain</strong><br>
+                        Mise en œuvre des stratégies validées sur les feux réels
+                    </div>
+                </div>
+            </section> -->
+
+            <!-- SLIDE 8: APPRENTISSAGE PAR RENFORCEMENT SIMPLIFIÉ -->
+            <section
+                data-background-image='https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=1920&auto=format&fit=crop'
+                data-background-opacity='0.25'
+                data-background-gradient='linear-gradient(135deg, rgba(102,126,234,0.9) 0%, rgba(118,75,162,0.9) 100%)'>
+                <h2>🎮 L'IA Apprend Comme un Être Humain</h2>
+                <div style='font-size: 1.1em; text-align: left; margin: 40px auto; max-width: 800px;'>
+                    <p>📚 <strong>Le principe du jeu vidéo :</strong></p>
+                    <ul>
+                        <li class='fragment'>❌ Feu rouge trop long ? <span class='problem'>Pénalité !</span></li>
+                        <li class='fragment'>✅ Feu vert au moment optimal ? <span class='solution'>Récompense !</span>
+                        </li>
+                        <li class='fragment'>🔁 L'IA itère jusqu'à découvrir la <strong>stratégie parfaite</strong></li>
+                    </ul>
+                </div>
+                <p class='fragment' style='margin-top: 40px; font-size: 1.5em;'>
+                    Des feux intelligents qui <span class='highlight'>s'adaptent dynamiquement</span> !
+                </p>
+            </section>
+
+            <!-- SLIDE 9: RÉSULTATS ATTENDUS (ULTRA-COMPACT) -->
+            <section
+                data-background-image='https://images.unsplash.com/photo-1449824913935-59a10b8d2000?q=80&w=1920&auto=format&fit=crop'
+                data-background-opacity='0.15'>
+
+                <p style='font-size: 1.1em; color: #ecf0f1; margin-bottom: 15px; line-height: 1.3;'>
+                    L'impact transformateur d'Àlì Bí sur Cotonou
+                </p>
+
+                <div
+                    style='display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; max-width: 900px; margin: 0 auto;'>
+                    <div class='fragment'
+                        style='background: linear-gradient(145deg, rgba(46, 204, 113, 0.25), rgba(46, 204, 113, 0.1)); padding: 16px 12px; border-radius: 10px; border: 2px solid rgba(46, 204, 113, 0.5); text-align: center;'>
+                        <div style='font-size: 2em; margin-bottom: 6px;'>🚦</div>
+                        <p style='font-size: 0.85em; margin: 0; line-height: 1.3; color: #ecf0f1;'>
+                            <strong style='color: #2ecc71;'>Moins de temps perdu</strong><br>
+                            <span style='font-size: 0.85em;'>aux feux rouges et dans les embouteillages</span>
+                        </p>
+                    </div>
+
+                    <div class='fragment'
+                        style='background: linear-gradient(145deg, rgba(52, 152, 219, 0.25), rgba(52, 152, 219, 0.1)); padding: 16px 12px; border-radius: 10px; border: 2px solid rgba(52, 152, 219, 0.5); text-align: center;'>
+                        <div style='font-size: 2em; margin-bottom: 6px;'>🚗</div>
+                        <p style='font-size: 0.85em; margin: 0; line-height: 1.3; color: #ecf0f1;'>
+                            <strong style='color: #3498db;'>Un flux plus fluide</strong><br>
+                            <span style='font-size: 0.85em;'>qui fait circuler plus de véhicules, plus rapidement</span>
+                        </p>
+                    </div>
+
+                    <div class='fragment'
+                        style='background: linear-gradient(145deg, rgba(46, 213, 115, 0.25), rgba(46, 213, 115, 0.1)); padding: 16px 12px; border-radius: 10px; border: 2px solid rgba(46, 213, 115, 0.5); text-align: center;'>
+                        <div style='font-size: 2em; margin-bottom: 6px;'>🌱</div>
+                        <p style='font-size: 0.85em; margin: 0; line-height: 1.3; color: #ecf0f1;'>
+                            <strong style='color: #2ed573;'>Un air plus respirable</strong><br>
+                            <span style='font-size: 0.85em;'>grâce à moins d'arrêts et de redémarrages</span>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- <div class='fragment'
+                    style='max-width: 850px; margin: 15px auto 0; padding: 14px; background: rgba(243, 156, 18, 0.15); border-radius: 8px; border-left: 3px solid #f39c12;'>
+                     <p style='font-size: 0.8em; line-height: 1.4; margin: 0;'>
+                        <strong style='color: #f39c12;'>💡 Phase 1 :</strong>
+                        Validation sur un carrefour stratégique à Cotonou pour démontrer la valeur avant déploiement
+                        global.
+                    </p> 
+                </div> -->
+
+
+            </section>
+
+            <!-- SLIDE 10: SIMULATION SUMO DÉTAILLÉE -->
+            <!-- <section
+                data-background-image='https://images.unsplash.com/photo-1639322537228-f710d846310a?q=80&w=1920&auto=format&fit=crop'
+                data-background-opacity='0.12' data-background-color='#1a1a1a'>
+                <h2>🎥 Jumeau Numérique en Action</h2>
+                <p style='font-size: 0.9em; margin-bottom: 20px; color: #ecf0f1;'>
+                    Modélisation 3D du réseau routier avec optimisation en temps réel par apprentissage par renforcement
+                </p>
+
+                <div style='max-width: 950px; margin: 0 auto;'>
+                    <div
+                        style='background: rgba(52, 152, 219, 0.15); padding: 25px; border-radius: 15px; border: 2px solid rgba(52, 152, 219, 0.4);'>
+                        <img src='sumo_simulation2.gif' alt='SUMO Traffic Simulation avec visualisation 3D Cesium'
+                            style='border-radius: 12px; width: 100%; box-shadow: 0 12px 40px rgba(0,0,0,0.5);'>
+
+                        <div
+                            style='display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 20px; font-size: 0.75em;'>
+                            <div class='fragment'
+                                style='background: rgba(46, 204, 113, 0.2); padding: 12px; border-radius: 8px;'>
+                                <strong style='color: #2ecc71;'>🗺️ Modélisation 3D</strong><br>
+                                Visualisation Cesium CZML
+                            </div>
+                            <div class='fragment'
+                                style='background: rgba(155, 89, 182, 0.2); padding: 12px; border-radius: 8px;'>
+                                <strong style='color: #9b59b6;'>🤖 Agents Intelligents</strong><br>
+                                RL multi-agents adaptatif
+                            </div>
+                            <div class='fragment'
+                                style='background: rgba(52, 152, 219, 0.2); padding: 12px; border-radius: 8px;'>
+                                <strong style='color: #3498db;'>⚡ Temps Réel</strong><br>
+                                Optimisation continue
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <p class='fragment' style='margin-top: 25px; font-size: 0.85em; color: #95a5a6;'>
+                    🚦 SUMO (Simulation of Urban MObility) + Apprentissage par Renforcement = Contrôle optimal du trafic
+                </p>
+            </section> -->
+
+            <!-- SLIDE 11: RÉFÉRENCES - CES TECHNOLOGIES ONT FAIT LEURS PREUVES (OPTIMISÉ) -->
+            <section
+                data-background-image='https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?q=80&w=1920&auto=format&fit=crop'
+                data-background-opacity='0.12'>
+                <h2 style='font-size: 1.3em; margin-bottom: 10px;'>🌍 Des Preuves Mondiales</h2>
+
+                <div style='text-align: left; max-width: 920px; margin: 0 auto; font-size: 0.64em;'>
+                    <div class='fragment'
+                        style='margin: 16px 0; padding: 12px 15px; background: rgba(52, 152, 219, 0.15); border-radius: 8px; border-left: 4px solid #3498db;'>
+                        <strong style='font-size: 1.14em;'>🌏 Singapour</strong> : -20% de délais en heures de pointe
+                        grâce à l'IA
+                        <p style='font-size: 0.91em; margin-top: 5px; color: #ecf0f1;'>Les citoyens perdent seulement
+                            25h/an dans le trafic (contre 148h dans les autres métropoles)</p>
+                    </div>
+                    <div class='fragment'
+                        style='margin: 16px 0; padding: 12px 15px; background: rgba(46, 204, 113, 0.15); border-radius: 8px; border-left: 4px solid #2ecc71;'>
+                        <strong style='font-size: 1.14em;'>🌏 Hangzhou (Alibaba City Brain)</strong> : -30% de
+                        congestion urbaine
+                        <p style='font-size: 0.91em; margin-top: 5px; color: #ecf0f1;'>Plus de 92% de précision dans la
+                            détection d'incidents</p>
+                    </div>
+                    <div class='fragment'
+                        style='margin: 16px 0; padding: 12px 15px; background: rgba(243, 156, 18, 0.15); border-radius: 8px; border-left: 4px solid #f39c12;'>
+                        <strong style='font-size: 1.14em;'>🌏 Pittsburgh (Surtrac - CMU)</strong> : -40% de temps
+                        d'attente aux carrefours, -25% sur les trajets
+                        <p style='font-size: 0.91em; margin-top: 5px; color: #ecf0f1;'>Réduction de 21% des émissions de
+                            CO₂</p>
+                    </div>
+                </div>
+                <p class='fragment' style='margin-top: 17px; font-size: 1.05em; color: #f39c12;'>
+                    <strong>La technologie a fait ses preuves. Comment l'adapter au Bénin ?</strong>
+                </p>
+            </section>
+
+            <!-- SLIDE 12: LE DÉFI AFRICAIN (REDESIGNED) -->
+            <!-- <section data-background-gradient='linear-gradient(135deg, #667eea 0%, #764ba2 100%)' data-auto-animate>
+                              <p style='font-size: 0.85em; color: #ecf0f1; margin-bottom: 28px;'>
+                    Ces technologies sont révolutionnaires mais ...
+                </p>
+
+                <div
+                    style='display: grid; grid-template-columns: 1fr 1fr; gap: 16px; max-width: 950px; margin: 0 auto; font-size: 0.7em;'>
+                 
+                    <div class='fragment'
+                        style='background: rgba(46, 204, 113, 0.12); padding: 36px 14px; border-radius: 9px; border: 1px solid rgba(46, 204, 113, 0.3);'>
+                        <div style='color: #2ecc71; font-weight: bold; font-size: 1.15em; margin-bottom: 6px;'>✅
+                            EXIGENCES</div>
+                        <ul style='margin: 0; padding-left: 16px; line-height: 1.6;'>
+                            <li>Capteurs ultra-denses (milliers/km²)</li>
+                            <li>Données massives temps réel</li>
+                            <li>Budgets conséquents </li>
+                            <li>Réseaux routiers standardisés</li>
+                        </ul>
+                    </div>
+
+                  
+                    <div class='fragment'
+                        style='background: rgba(231, 76, 60, 0.12); padding: 36px 14px; border-radius: 9px; border: 1px solid rgba(231, 76, 60, 0.3);'>
+                        <div style='color: #e74c3c; font-weight: bold; font-size: 1.15em; margin-bottom: 6px;'>🚧 AU
+                            BÉNIN</div>
+                        <ul style='margin: 0; padding-left: 16px; line-height: 1.45;'>
+                            <li>❌ Infrastructure capteurs limitée</li>
+                            <li>❌ Données parcellaires</li>
+                            <li>❌ Contraintes budgétaires fortes</li>
+                            <li>❌ Trafic hétérogène (motos, véhicules, piétons)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class='fragment'
+                    style='margin-top: 20px; padding: 14px 20px;  border-radius: 10px; max-width: 850px; margin-left: auto; margin-right: auto;'>
+                    <p
+                        style='font-size: 0.8em; color: var(--brand-primary); font-weight: bold; margin: 0; line-height: 1.15;'>
+                        💡 L'ENJEU : Adapter cette révolution au contexte africain, maintenant.
+                    </p>
+                </div>
+            </section> -->
+
+            <!-- SLIDE 13: Àlì Bí - NOTRE SOLUTION (NVIDIA STYLE) -->
+            <section
+                data-background-image='https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1920&auto=format&fit=crop'
+                data-background-opacity='0.15'
+                data-background-gradient='linear-gradient(to bottom, rgba(46,204,113,0.9), rgba(52,152,219,0.9))'
+                data-auto-animate>
+                <h1 class='glow' style='font-size: 2.5em; margin-bottom: 15px;'>💡 Àlì Bí</h1>
+                <p style='font-size: 1.15em; color: #ecf0f1; font-weight: 300; margin-bottom: 50px;'>
+                    L'Intelligence Artificielle Pensée pour le Bénin
+                </p>
+
+                <div
+                    style='display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; max-width: 800px; margin: 0 auto;'>
+
+                    <div class='fragment'
+                        style='background: rgba(0, 0, 0, 0.5); padding: 28px 22px; border-radius: 12px; backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1);'>
+                        <div style='font-size: 2.5em; margin-bottom: 12px;'>📡</div>
+                        <h3 style='font-size: 0.95em; color: var(--brand-primary); margin-bottom: 10px;'>TOMTOM TRAFFIC
+                        </h3>
+                        <p style='font-size: 0.7em; line-height: 1.4; color: #bdc3c7;'>
+                            Données temps réel<br>
+                            Couverture Cotonou<br>
+                            Infrastructure légère
+                        </p>
+                    </div>
+
+                    <div class='fragment'
+                        style='background: rgba(0, 0, 0, 0.5); padding: 28px 22px; border-radius: 12px; backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1);'>
+                        <div style='font-size: 2.5em; margin-bottom: 12px;'>🤖</div>
+                        <h3 style='font-size: 0.95em; color: var(--brand-primary); margin-bottom: 10px;'>IA OPTIMISÉE
+                        </h3>
+                        <p style='font-size: 0.7em; line-height: 1.4; color: #bdc3c7;'>
+                            Apprentissage adaptatif<br>
+                            Algorithmes efficients<br>
+                            Infrastructure locale
+                        </p>
+                    </div>
+                </div>
+
+
+            </section>
+
+            <!-- SLIDE 14: MACROSCOPIQUE VS MICROSCOPIQUE (REDESIGNED) -->
+            <!-- <section
+                data-background-image='https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1920&auto=format&fit=crop'
+                data-background-opacity='0.08' data-background-color='#1a1a1e' data-auto-animate>
+                <h2 style='font-size: 1.28em; margin-bottom: 4px;'>🔬 Macroscopique vs. Microscopique</h2>
+                <h3 style='margin-bottom: 10px; font-size: 0.82em; color: #bdc3c7;'>Un Choix Technique et Stratégique
+                </h3>
+
+                <div
+                    style='display: grid; grid-template-columns: 1fr 1fr; gap: 14px; max-width: 1000px; margin: 0 auto; font-size: 0.58em;'>
+                    <div class='fragment'
+                        style='background: rgba(0, 0, 0, 0.6); padding: 11px 13px; border-radius: 9px; border: 2px solid rgba(231, 76, 60, 0.6); backdrop-filter: blur(8px);'>
+                        <h4 style='color: #e74c3c; margin-bottom: 4px; font-size: 1.22em;'>MICROSCOPIQUE</h4>
+                        <p style='font-size: 0.88em; color: #95a5a6; margin-bottom: 7px;'><strong>(SUMO,
+                                CityFlow)</strong></p>
+                        <div style='text-align: left; line-height: 1.38;'>
+                            <p style='margin: 3px 0;'>🔍 Modélisation véhicule par véhicule</p>
+                            <p style='color: #2ecc71; margin: 3px 0;'>✅ Précision maximale</p>
+                            <p style='color: #e74c3c; margin: 3px 0;'>❌ Exige données granulaires</p>
+                            <p style='color: #e74c3c; margin: 3px 0;'>❌ Coût élevé (calcul + capteurs)</p>
+                            <p style='margin-top: 6px; font-size: 0.9em; color: #ecf0f1;'><strong>💰 Pour :</strong>
+                                Métropoles avec infrastructure complète</p>
+                        </div>
+                    </div>
+
+                    <div class='fragment'
+                        style='background: rgba(0, 0, 0, 0.6); padding: 11px 13px; border-radius: 9px; border: 2px solid rgba(46, 204, 113, 0.6); backdrop-filter: blur(8px);'>
+                        <h4 style='color: #2ecc71; margin-bottom: 4px; font-size: 1.22em;'>MACROSCOPIQUE</h4>
+                        <p style='font-size: 0.88em; color: #95a5a6; margin-bottom: 7px;'><strong>(Àlì Bí)</strong></p>
+                        <div style='text-align: left; line-height: 1.38;'>
+                            <p style='margin: 3px 0;'>🌊 Modélisation des FLUX globaux</p>
+                            <p style='color: #2ecc71; margin: 3px 0;'>✅ Compatible données agrégées</p>
+                            <p style='color: #2ecc71; margin: 3px 0;'>✅ Déploiement rapide, coût maîtrisé</p>
+                            <p style='color: #2ecc71; margin: 3px 0;'>✅ Robuste réseaux complexes</p>
+                            <p style='margin-top: 6px; font-size: 0.9em; color: #ecf0f1;'><strong>💰 Pour :</strong>
+                                Contextes émergents (Bénin)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class='fragment'
+                    style='margin-top: 12px; background: rgba(243, 156, 18, 0.15); padding: 10px 15px; border-radius: 9px; max-width: 880px; margin-left: auto; margin-right: auto; border: 1px solid rgba(243, 156, 18, 0.3);'>
+                    <p style='font-size: 0.92em; line-height: 1.32; color: #ecf0f1;'>
+                        <strong style='color: #f39c12;'>🎯 STRATÉGIE :</strong> Démarrer macroscopique → déploiement
+                        RAPIDE → prouver VALEUR → collecter DONNÉES → raffiner.
+                    </p>
+                </div>
+            </section> -->
+
+            <!-- SLIDE 14: CE QUI EST DÉJÀ FAIT - LA DÉMO CONCRÈTE -->
+            <section
+                data-background-image='https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1920&auto=format&fit=crop'
+                data-background-opacity='0.15' data-background-color='#0f0f0f'>
+                <h2 style='font-size: 1.4em; margin-bottom: 12px;'>✅ Ce Qui Est Déjà Fait</h2>
+                <p style='font-size: 0.9em; color: #2ecc71; margin-bottom: 20px; font-weight: bold;'>
+                    Pas de théorie. Du code. Des données. Une architecture fonctionnelle.
+                </p>
+
+                <div style='text-align: left; max-width: 920px; margin: 0 auto; font-size: 0.74em;'>
+                    <div class='fragment'
+                        style='margin: 10px 0; padding: 16px 18px; background: rgba(46, 204, 113, 0.2); border-radius: 10px; border-left: 4px solid #2ecc71;'>
+                        <h3 style='margin: 0 0 8px 0; color: #2ecc71; font-size: 1.08em;'>✅ Code RL Complet sur GitHub
+                        </h3>
+                        <p style='font-size: 0.98em; line-height: 1.4; margin: 0;'>
+                            Algorithme d'apprentissage par renforcement déjà écrit et testé
+                        </p>
+                    </div>
+
+                    <div class='fragment'
+                        style='margin: 10px 0; padding: 16px 18px; background: rgba(52, 152, 219, 0.2); border-radius: 10px; border-left: 4px solid #3498db;'>
+                        <h3 style='margin: 0 0 8px 0; color: #3498db; font-size: 1.08em;'>✅ Données TomTom Récupérées
+                        </h3>
+                        <p style='font-size: 0.95em; line-height: 1.35; margin: 0;'>
+                            Une semaine complète de données de trafic de Cotonou déjà collectée
+                        </p>
+                    </div>
+
+                    <div class='fragment'
+                        style='margin: 10px 0; padding: 16px 18px; background: rgba(155, 89, 182, 0.2); border-radius: 10px; border-left: 4px solid #9b59b6;'>
+                        <h3 style='margin: 0 0 8px 0; color: #9b59b6; font-size: 1.08em;'>✅ Pipeline Temps Réel
+                            Opérationnel</h3>
+                        <p style='font-size: 0.95em; line-height: 1.35; margin: 0;'>
+                            Code pour récupérer les données TomTom en temps réel fonctionnel
+                        </p>
+                    </div>
+
+                    <div class='fragment'
+                        style='margin: 10px 0; padding: 16px 18px; background: rgba(243, 156, 18, 0.2); border-radius: 10px; border-left: 4px solid #f39c12;'>
+                        <h3 style='margin: 0 0 8px 0; color: #f39c12; font-size: 1.08em;'>✅ Réseau Topologique Extrait
+                        </h3>
+                        <p style='font-size: 0.95em; line-height: 1.35; margin: 0;'>
+                            Données du réseau topologique (OSM) extraites sur un corridor stratégique
+                        </p>
+                    </div>
+                </div>
+
+                <p class='fragment'
+                    style='margin-top: 20px; font-size: 1em; color: var(--brand-primary); font-weight: bold;'>
+                    → Il ne manque que les GPU pour lancer l'entraînement final !
+                </p>
+            </section>
+
+            <!-- SLIDE 15: DONNÉES COLLECTÉES - INFRASTRUCTURE ROUTIÈRE BÉNIN -->
+            <section
+                data-background-image='https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1920&auto=format&fit=crop'
+                data-background-opacity='0.12'
+                data-background-gradient='linear-gradient(to bottom, rgba(41,128,185,0.85), rgba(142,68,173,0.85))'>
+
+                <h2 class='glow' style='font-size: 1.6em; margin-bottom: 8px;'>📊 Infrastructure Routière du Bénin</h2>
+                <p style='font-size: 0.8em; color: #ecf0f1; font-weight: 300; margin-bottom: 25px;'>Données
+                    OpenStreetMap - Analyse Complète</p>
+
+                <div
+                    style='display: grid; grid-template-columns: 1fr 1fr; gap: 18px; max-width: 1000px; margin: 0 auto;'>
+
+                    <!-- Statistiques Globales -->
+                    <div class='fragment'
+                        style='background: rgba(0,0,0,0.5); padding: 18px; border-radius: 12px; border: 2px solid rgba(52,152,219,0.6); backdrop-filter: blur(10px);'>
+                        <h3 style='color: #3498db; margin-bottom: 12px; font-size: 1.1em;'>🗺️ RÉSEAU NATIONAL</h3>
+                        <div style='text-align: left; line-height: 1.5; font-size: 0.75em;'>
+                            <p style='margin: 6px 0;'><strong style='color: #3498db;'>128,501</strong> segments de
+                                routes</p>
+                            <p style='margin: 6px 0;'><strong style='color: #3498db;'>~74,500 km</strong> de voirie
+                                totale</p>
+                            <p style='margin: 6px 0;'><strong style='color: #3498db;'>580m</strong> longueur
+                                moyenne/segment</p>
+                            <p style='margin: 6px 0; font-size: 0.85em; color: #95a5a6;'>Source: OpenStreetMap
+                                (gis_osm_roads_free_1.shp)</p>
+                        </div>
+                    </div>
+
+                    <!-- Classification Routes -->
+                    <div class='fragment'
+                        style='background: rgba(0,0,0,0.5); padding: 18px; border-radius: 12px; border: 2px solid rgba(155,89,182,0.6); backdrop-filter: blur(10px);'>
+                        <h3 style='color: #9b59b6; margin-bottom: 12px; font-size: 1.1em;'>🛣️ HIÉRARCHIE ROUTIÈRE</h3>
+                        <div style='text-align: left; line-height: 1.4; font-size: 0.7em;'>
+                            <p style='margin: 5px 0;'>🔴 <strong>R1:</strong> Trunk/Primary (Autoroutes/Nationales)</p>
+                            <p style='margin: 5px 0;'>🟠 <strong>R2:</strong> Secondary/Tertiary (Départementales)</p>
+                            <p style='margin: 5px 0;'>🟡 <strong>R3:</strong> Residential (Urbaines locales)</p>
+                            <p style='margin: 5px 0;'>🟢 <strong>R4:</strong> Track (Pistes carrossables)</p>
+                            <p style='margin: 5px 0;'>🔵 <strong>R5:</strong> Service/Path (Desserte/Piétons)</p>
+                        </div>
+                    </div>
+
+                    <!-- Données Géospatiales -->
+                    <div class='fragment'
+                        style='background: rgba(0,0,0,0.5); padding: 18px; border-radius: 12px; border: 2px solid rgba(46,204,113,0.6); backdrop-filter: blur(10px); grid-column: 1 / -1;'>
+                        <h3 style='color: #2ecc71; margin-bottom: 12px; font-size: 1em;'>📁 DONNÉES DISPONIBLES (Format
+                            GIS)</h3>
+                        <div
+                            style='display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; font-size: 0.65em; text-align: left;'>
+                            <div>✅ Routes (gis_osm_roads_free_1)</div>
+                            <div>✅ Bâtiments (gis_osm_buildings_a)</div>
+                            <div>✅ POIs (gis_osm_pois_free_1)</div>
+                            <div>✅ Signalisation (gis_osm_traffic_free_1)</div>
+                            <div>✅ Transport (gis_osm_transport_a)</div>
+                            <div>✅ Usage du sol (gis_osm_landuse_a)</div>
+                            <div>✅ Rails (gis_osm_railways_free_1)</div>
+                            <div>✅ Voies d'eau (gis_osm_waterways)</div>
+                        </div>
+                        <p style='margin-top: 10px; font-size: 0.7em; color: #95a5a6;'>
+                            📦 Formats: Shapefile (.shp), GeoJSON, CSV processés | 🔧 Outils: GeoPandas, Shapely, NumPy
+                        </p>
+                    </div>
+
+                </div>
+
+                <aside class='notes'>
+                    <strong>SLIDE DONNÉES ROUTIÈRES - 1min30</strong><br><br>
+
+                    <strong>MESSAGE CLÉ:</strong> "Nous avons cartographié TOUT le réseau routier béninois."<br><br>
+
+                    <strong>SCRIPT:</strong><br>
+                    "Avant de construire un système intelligent, il fallait comprendre le terrain. Nous avons collecté
+                    et analysé les données OpenStreetMap complètes du Bénin:"<br><br>
+
+                    [Fragment 1 - Réseau National]<br>
+                    "128 MILLE segments de routes, représentant 74 500 kilomètres de voirie. C'est TOUT le réseau
+                    national, de Cotonou aux villages les plus reculés."<br><br>
+
+                    [Fragment 2 - Hiérarchie]<br>
+                    "Chaque route est classifiée selon sa fonction - des autoroutes nationales R1 aux pistes
+                    carrossables R4. Cette hiérarchie est ESSENTIELLE pour notre algorithme de priorisation du
+                    trafic."<br><br>
+
+                    [Fragment 3 - Données GIS]<br>
+                    "Au-delà des routes, nous avons intégré les bâtiments, les POIs, la signalisation existante. Un
+                    écosystème de données COMPLET pour contextualiser la mobilité."<br><br>
+
+                    <strong>STATISTIQUES À RETENIR:</strong><br>
+                    • 128,501 segments de routes analysés<br>
+                    • 580m de longueur moyenne par segment<br>
+                    • 5 catégories de classification routière (R1-R5)<br>
+                    • 8 couches géospatiales disponibles (routes, bâtiments, POIs, etc.)<br><br>
+
+                    <strong>ANTICIPATION Q&A:</strong><br>
+                    Q: "Pourquoi OpenStreetMap et pas des données officielles ?"<br>
+                    R: "OpenStreetMap est la base de données géospatiales la plus complète et ACTUALISÉE pour l'Afrique.
+                    Les données officielles sont souvent fragmentées ou obsolètes. OSM est mis à jour quotidiennement
+                    par la communauté."<br><br>
+
+                    <strong>TRANSITION:</strong> "Mais les routes statiques ne suffisent pas. Il nous fallait comprendre
+                    le FLUX réel du trafic..."
+                </aside>
+            </section>
+
+            <!-- SLIDE 16: COLLECTE API TOMTOM - DONNÉES TRAFIC TEMPS RÉEL -->
+            <section
+                data-background-image='https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1920&auto=format&fit=crop'
+                data-background-opacity='0.12'
+                data-background-gradient='linear-gradient(to bottom, rgba(230,126,34,0.85), rgba(192,57,43,0.85))'>
+
+                <h2 class='glow' style='font-size: 1.6em; margin-bottom: 8px;'>🌐 Collecte de Données Trafic Temps Réel
+                </h2>
+                <p style='font-size: 0.8em; color: #ecf0f1; font-weight: 300; margin-bottom: 25px;'>API TomTom Traffic
+                    Flow - Stratégie Saturée</p>
+
+                <div
+                    style='display: grid; grid-template-columns: 1fr 1fr; gap: 18px; max-width: 1000px; margin: 0 auto;'>
+
+                    <!-- Métriques de Collecte -->
+                    <div class='fragment'
+                        style='background: rgba(0,0,0,0.5); padding: 18px; border-radius: 12px; border: 2px solid rgba(230,126,34,0.6); backdrop-filter: blur(10px);'>
+                        <h3 style='color: #e67e22; margin-bottom: 12px; font-size: 1.1em;'>📈 VOLUME COLLECTÉ</h3>
+                        <div style='text-align: left; line-height: 1.5; font-size: 0.75em;'>
+                            <p style='margin: 6px 0;'><strong style='color: #e67e22;'>1,910</strong> enregistrements
+                                trafic</p>
+                            <p style='margin: 6px 0;'><strong style='color: #e67e22;'>10</strong> segments stratégiques
+                                Cotonou</p>
+                            <p style='margin: 6px 0;'><strong style='color: #e67e22;'>99.6%</strong> de confiance
+                                moyenne API</p>
+                            <p style='margin: 6px 0; font-size: 0.85em; color: #95a5a6;'>Collecte sur 24h avec cycle
+                                adaptatif</p>
+                        </div>
+                    </div>
+
+                    <!-- Variables API -->
+                    <div class='fragment'
+                        style='background: rgba(0,0,0,0.5); padding: 18px; border-radius: 12px; border: 2px solid rgba(192,57,43,0.6); backdrop-filter: blur(10px);'>
+                        <h3 style='color: #c0392b; margin-bottom: 12px; font-size: 1.1em;'>🔍 VARIABLES TomTom</h3>
+                        <div style='text-align: left; line-height: 1.4; font-size: 0.7em;'>
+                            <p style='margin: 5px 0;'>⚡ <strong>current_speed:</strong> Vitesse actuelle (km/h)</p>
+                            <p style='margin: 5px 0;'>🏎️ <strong>freeflow_speed:</strong> Vitesse fluide théorique</p>
+                            <p style='margin: 5px 0;'>📊 <strong>confidence:</strong> Fiabilité mesure (0-1)</p>
+                            <p style='margin: 5px 0;'>📍 <strong>coordinates:</strong> Géolocalisation segment</p>
+                            <p style='margin: 5px 0;'>⏰ <strong>timestamp:</strong> Horodatage précis</p>
+                        </div>
+                    </div>
+
+                    <!-- Stratégie de Collecte INTELLIGENTE -->
+                    <div class='fragment'
+                        style='background: rgba(0,0,0,0.5); padding: 18px; border-radius: 12px; border: 2px solid rgba(241,196,15,0.6); backdrop-filter: blur(10px); grid-column: 1 / -1;'>
+                        <h3 style='color: #f1c40f; margin-bottom: 12px; font-size: 1em;'>🧠 CYCLE ADAPTATIF "SATURATION
+                            INTELLIGENTE"</h3>
+                        <div
+                            style='display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; font-size: 0.68em;'>
+                            <div style='background: rgba(231,76,60,0.3); padding: 10px; border-radius: 8px;'>
+                                <strong style='color: #e74c3c;'>🔴 HEURES DE POINTE</strong><br>
+                                <span style='font-size: 0.9em;'>6h-10h & 16h-22h</span><br>
+                                <strong style='color: #2ecc71;'>⏱️ 3 minutes</strong>
+                            </div>
+                            <div style='background: rgba(241,196,15,0.3); padding: 10px; border-radius: 8px;'>
+                                <strong style='color: #f39c12;'>🟡 JOURNÉE</strong><br>
+                                <span style='font-size: 0.9em;'>10h-16h</span><br>
+                                <strong style='color: #2ecc71;'>⏱️ 5 minutes</strong>
+                            </div>
+                            <div style='background: rgba(52,152,219,0.3); padding: 10px; border-radius: 8px;'>
+                                <strong style='color: #3498db;'>🔵 NUIT</strong><br>
+                                <span style='font-size: 0.9em;'>22h-6h</span><br>
+                                <strong style='color: #2ecc71;'>⏱️ 15 minutes</strong>
+                            </div>
+                        </div>
+                        <p style='margin-top: 12px; font-size: 0.65em; color: #95a5a6;'>
+                            💰 <strong>Coût estimé API (sans free tier):</strong> ~750 requêtes/jour × $0.002 = <strong
+                                style='color: #e74c3c;'>$1.50/jour</strong> | $45/mois pour surveillance temps réel
+                            continue
+                        </p>
+                    </div>
+
+                </div>
+
+                <aside class='notes'>
+                    <strong>SLIDE API TOMTOM - 1min30</strong><br><br>
+
+                    <strong>MESSAGE CLÉ:</strong> "Des données RÉELLES, collectées méthodiquement, pas des
+                    simulations."<br><br>
+
+                    <strong>SCRIPT:</strong><br>
+                    "Connaître les routes ne suffit pas. Il faut comprendre comment le trafic BOUGE. Nous avons déployé
+                    un système de collecte temps réel via l'API TomTom Traffic Flow:"<br><br>
+
+                    [Fragment 1 - Volume]<br>
+                    "1 910 enregistrements collectés sur 10 segments stratégiques de Cotonou. Chaque donnée a une
+                    confiance de 99,6% - c'est du RÉEL, pas de l'estimation."<br><br>
+
+                    [Fragment 2 - Variables]<br>
+                    "Cinq variables clés par mesure : vitesse actuelle, vitesse théorique en flux libre, niveau de
+                    confiance, géolocalisation précise, et horodatage. De quoi entraîner un modèle RL robuste."<br><br>
+
+                    [Fragment 3 - Cycle Adaptatif]<br>
+                    "Notre stratégie ? La 'Saturation Intelligente'. On collecte toutes les 3 minutes aux heures de
+                    pointe, 5 minutes en journée, 15 minutes la nuit. Pourquoi ? Pour maximiser l'information utile sans
+                    gaspiller le quota API."<br><br>
+
+                    "Et le coût ? 1,50 dollar par jour, 45 dollars par mois pour une surveillance continue. C'est
+                    ABORDABLE pour une municipalité, même au Bénin."<br><br>
+
+                    <strong>STATISTIQUES À RETENIR:</strong><br>
+                    • 1,910 enregistrements trafic collectés<br>
+                    • 99.6% de confiance moyenne (fiabilité API)<br>
+                    • 10 segments stratégiques surveillés (corridors Cotonou)<br>
+                    • $1.50/jour pour collecte temps réel ($45/mois)<br>
+                    • 3-15 min d'intervalle selon cycle adaptatif<br><br>
+
+                    <strong>ANTICIPATION Q&A:</strong><br>
+                    Q: "Pourquoi TomTom et pas Google Maps API ?"<br>
+                    R: "TomTom fournit des données de FLUX (current_speed vs freeflow_speed) plus riches que Google pour
+                    l'analyse de congestion. De plus, leur API est mieux documentée pour l'Afrique de l'Ouest."<br><br>
+
+                    Q: "45$/mois, c'est viable pour Cotonou ?"<br>
+                    R: "Absolument. C'est le prix d'un panneau routier classique. Et une fois le modèle entraîné, on
+                    peut RÉDUIRE la fréquence de collecte."<br><br>
+
+                    <strong>TRANSITION:</strong> "Avec ces données, on pouvait enfin entraîner l'intelligence
+                    artificielle..."
+                </aside>
+            </section>
+
+            <!-- SLIDE 17: CODE RL (DQN) - ARCHITECTURE TECHNIQUE -->
+            <section
+                data-background-image='https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1920&auto=format&fit=crop'
+                data-background-opacity='0.12'
+                data-background-gradient='linear-gradient(to bottom, rgba(142,68,173,0.85), rgba(41,128,185,0.85))'>
+
+                <h2 class='glow' style='font-size: 1.6em; margin-bottom: 8px;'>🤖 Architecture RL - Deep Q-Network (DQN)
+                </h2>
+                <!-- <p style='font-size: 0.8em; color: #ecf0f1; font-weight: 300; margin-bottom: 25px;'>Code Complet sur GitHub - Stable-Baselines3</p> -->
+
+                <div
+                    style='display: grid; grid-template-columns: 1fr 1fr; gap: 18px; max-width: 1000px; margin: 0 auto;'>
+
+                    <!-- Architecture RL -->
+                    <div class='fragment'
+                        style='background: rgba(0,0,0,0.5); padding: 18px; border-radius: 12px; border: 2px solid rgba(142,68,173,0.6); backdrop-filter: blur(10px);'>
+                        <h3 style='color: #8e44ad; margin-bottom: 12px; font-size: 1.1em;'>🧠 ALGORITHME DQN</h3>
+                        <div style='text-align: left; line-height: 1.5; font-size: 0.7em;'>
+                            <p style='margin: 6px 0;'>🎯 <strong>Espace d'action:</strong> 2 actions discrètes</p>
+                            <p style='margin: 5px 0 5px 16px; font-size: 0.9em; color: #bdc3c7;'>0: Maintenir phase
+                                actuelle</p>
+                            <p style='margin: 5px 0 5px 16px; font-size: 0.9em; color: #bdc3c7;'>1: Changer de phase</p>
+                            <p style='margin: 6px 0;'>📊 <strong>Observations:</strong> 43 dimensions</p>
+                            <p style='margin: 5px 0 5px 16px; font-size: 0.9em; color: #bdc3c7;'>Densités, vitesses,
+                                files, timing</p>
+                            <p style='margin: 6px 0;'>🎁 <strong>Récompense:</strong> Multi-objectif</p>
+                            <p style='margin: 5px 0 5px 16px; font-size: 0.9em; color: #bdc3c7;'>Temps d'attente, débit,
+                                files</p>
+                        </div>
+                    </div>
+
+                    <!-- Composants Système -->
+                    <div class='fragment'
+                        style='background: rgba(0,0,0,0.5); padding: 18px; border-radius: 12px; border: 2px solid rgba(52,152,219,0.6); backdrop-filter: blur(10px);'>
+                        <h3 style='color: #3498db; margin-bottom: 12px; font-size: 1.1em;'>🏗️ STACK TECHNIQUE</h3>
+                        <div style='text-align: left; line-height: 1.4; font-size: 0.7em;'>
+                            <p style='margin: 5px 0;'>🐍 <strong>Python 3.10+</strong> | PyTorch backend</p>
+                            <p style='margin: 5px 0;'>🤖 <strong>Stable-Baselines3</strong> (DQN)</p>
+                            <p style='margin: 5px 0;'>🏋️ <strong>Gymnasium</strong> (Env custom)</p>
+                            <p style='margin: 5px 0;'>🚗 <strong>ARZ Simulator</strong> (Trafic multi-classe)</p>
+                            <p style='margin: 5px 0;'>📊 <strong>Pandas/NumPy</strong> (Data pipeline)</p>
+                            <p style='margin: 5px 0;'>🗺️ <strong>GeoPandas</strong> (Spatial analysis)</p>
+                        </div>
+                    </div>
+
+                    <!-- Code Snippet - Architecture -->
+                    <!-- <div class='fragment' style='background: rgba(0,0,0,0.7); padding: 16px; border-radius: 12px; border: 2px solid rgba(46,204,113,0.6); backdrop-filter: blur(10px); grid-column: 1 / -1; font-family: "Courier New", monospace;'>
+                        <h3 style='color: #2ecc71; margin-bottom: 10px; font-size: 0.95em;'>💻 CODE SNIPPET - train_dqn.py</h3>
+                        <pre style='background: rgba(0,0,0,0.5); padding: 12px; border-radius: 8px; font-size: 0.6em; line-height: 1.4; text-align: left; overflow-x: auto;'><code style='color: #ecf0f1;'><span style='color: #f39c12;'>from</span> stable_baselines3 <span style='color: #f39c12;'>import</span> DQN
+<span style='color: #f39c12;'>from</span> env.traffic_signal_env <span style='color: #f39c12;'>import</span> TrafficSignalEnv
+
+<span style='color: #95a5a6;'># Création environnement Gymnasium custom</span>
+env = TrafficSignalEnv(
+    endpoint_client=arz_client,
+    signal_controller=controller,
+    config=env_config,
+    branch_ids=[<span style='color: #e74c3c;'>"branch_0"</span>, <span style='color: #e74c3c;'>"branch_1"</span>, <span style='color: #e74c3c;'>"branch_2"</span>, <span style='color: #e74c3c;'>"branch_3"</span>]
+)
+
+<span style='color: #95a5a6;'># Agent DQN avec réseau de neurones profond</span>
+model = DQN(
+    policy=<span style='color: #e74c3c;'>"MlpPolicy"</span>,
+    env=env,
+    learning_rate=<span style='color: #e74c3c;'>1e-4</span>,
+    buffer_size=<span style='color: #e74c3c;'>50000</span>,
+    exploration_fraction=<span style='color: #e74c3c;'>0.3</span>,
+    target_update_interval=<span style='color: #e74c3c;'>1000</span>
+)
+
+<span style='color: #95a5a6;'># Entraînement sur 100k timesteps</span>
+model.learn(total_timesteps=<span style='color: #e74c3c;'>100_000</span>, log_interval=<span style='color: #e74c3c;'>10</span>)</code></pre>
+                        <p style='margin-top: 8px; font-size: 0.6em; color: #95a5a6;'>
+                            📂 Repository: <strong style='color: #3498db;'>github.com/elonmj/Smart-Mobility/Code_RL</strong> | 760 lignes train_dqn.py + architecture modulaire complète
+                        </p>
+                    </div> -->
+
+                    <!-- Métriques Performance -->
+                    <div class='fragment'
+                        style='background: rgba(0,0,0,0.5); padding: 16px; border-radius: 12px; border: 2px solid rgba(241,196,15,0.6); backdrop-filter: blur(10px); grid-column: 1 / -1;'>
+                        <h3 style='color: #f1c40f; margin-bottom: 10px; font-size: 0.95em;'>📊 FONCTION DE RÉCOMPENSE
+                            MULTI-OBJECTIF</h3>
+                        <div
+                            style='display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; font-size: 0.65em;'>
+                            <div style='background: rgba(231,76,60,0.3); padding: 8px; border-radius: 8px;'>
+                                <strong style='color: #e74c3c;'>Temps d'attente</strong><br>
+                                Poids: <strong>1.2</strong>
+                            </div>
+                            <div style='background: rgba(52,152,219,0.3); padding: 8px; border-radius: 8px;'>
+                                <strong style='color: #3498db;'>Longueur files</strong><br>
+                                Poids: <strong>0.6</strong>
+                            </div>
+                            <div style='background: rgba(46,204,113,0.3); padding: 8px; border-radius: 8px;'>
+                                <strong style='color: #2ecc71;'>Débit trafic</strong><br>
+                                Poids: <strong>1.0</strong>
+                            </div>
+                            <div style='background: rgba(241,196,15,0.3); padding: 8px; border-radius: 8px;'>
+                                <strong style='color: #f39c12;'>Pénalité switches</strong><br>
+                                Poids: <strong>0.1</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <aside class='notes'>
+                    <strong>SLIDE CODE RL (DQN) - 1min30</strong><br><br>
+
+                    <strong>MESSAGE CLÉ:</strong> "Ce n'est pas un concept. C'est du CODE qui tourne."<br><br>
+
+                    <strong>SCRIPT:</strong><br>
+                    "Avec les données en main, nous avons construit le cerveau du système : un agent d'apprentissage par
+                    renforcement basé sur l'algorithme Deep Q-Network."<br><br>
+
+                    [Fragment 1 - Algorithme DQN]<br>
+                    "L'agent apprend à prendre 2 décisions : maintenir le feu actuel ou changer de phase. Cela semble
+                    simple, mais il doit analyser 43 dimensions d'observations - densités de véhicules, vitesses
+                    moyennes, longueurs de files, timing des phases."<br><br>
+
+                    "La récompense est multi-objectif : minimiser le temps d'attente (poids 1.2), réduire les files
+                    (0.6), maximiser le débit (1.0), et éviter les changements trop fréquents (pénalité 0.1)."<br><br>
+
+                    [Fragment 2 - Stack Technique]<br>
+                    "Stack 100% Python : Stable-Baselines3 pour le DQN, Gymnasium pour l'environnement custom, ARZ
+                    Simulator pour modéliser le trafic multi-classe (motos + voitures), GeoPandas pour l'analyse
+                    spatiale."<br><br>
+
+                    [Fragment 3 - Code Snippet]<br>
+                    "Voici le code RÉEL. Création de l'environnement Gymnasium, agent DQN avec exploration
+                    epsilon-greedy, buffer de replay de 50 000 expériences, entraînement sur 100 000 timesteps. Tout est
+                    sur GitHub - 760 lignes pour train_dqn.py, architecture modulaire complète."<br><br>
+
+                    [Fragment 4 - Métriques]<br>
+                    "La fonction de récompense équilibre 4 objectifs. On ne veut pas juste fluidifier le trafic, on veut
+                    le faire de manière INTELLIGENTE - sans créer d'effet rebond."<br><br>
+
+                    <strong>STATISTIQUES À RETENIR:</strong><br>
+                    • 2 actions discrètes (maintenir/changer phase)<br>
+                    • 43 dimensions d'observation (état trafic complet)<br>
+                    • 760 lignes de code train_dqn.py<br>
+                    • 100,000 timesteps d'entraînement<br>
+                    • 4 objectifs de récompense pondérés<br><br>
+
+                    <strong>ANTICIPATION Q&A:</strong><br>
+                    Q: "Pourquoi DQN et pas A3C ou PPO ?"<br>
+                    R: "DQN est un excellent choix pour espaces d'actions DISCRETS (maintenir/changer). A3C et PPO
+                    brillent sur actions continues. Pour les feux de signalisation, DQN offre le meilleur ratio
+                    performance/complexité."<br><br>
+
+                    Q: "Combien de temps pour entraîner le modèle ?"<br>
+                    R: "Sur un laptop standard (CPU), environ 2-3 heures pour 100k timesteps. Sur GPU, moins de 30
+                    minutes. Une fois entraîné, l'inférence est INSTANTANÉE - quelques millisecondes."<br><br>
+
+                    <strong>TRANSITION:</strong> "Et maintenant, regardons ce qui est DÉJÀ opérationnel..."
+                </aside>
+            </section>
+
+            <!-- SLIDE NOUVELLE: ROADMAP - LES PROCHAINES ÉTAPES -->
+            <section
+                data-background-image='https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?q=80&w=1920&auto=format&fit=crop'
+                data-background-opacity='0.15'
+                data-background-gradient='linear-gradient(135deg, rgba(52, 152, 219, 0.9), rgba(155, 89, 182, 0.9))'>
+                <h2 style='font-size: 1.6em; margin-bottom: 15px; font-weight: bold;'>🗺️ Les Prochaines Étapes</h2>
+                <p style='font-size: 0.95em; color: #f39c12; margin-bottom: 30px; font-weight: bold;'>
+                    De la preuve de concept au système validé
+                </p>
+
+                <div style='text-align: left; max-width: 900px; margin: 0 auto; font-size: 0.7em;'>
+                    <!-- Phase 1 -->
+                    <div class='fragment'
+                        style='margin: 12px 0; padding: 16px 20px; background: rgba(52, 152, 219, 0.3); border-radius: 10px; border-left: 4px solid #3498db; backdrop-filter: blur(5px);'>
+                        <h3 style='margin: 0 0 8px 0; color: #ffffff; font-size: 1.1em; font-weight: bold;'>📊 PHASE 1 :
+                            Collecte de Données</h3>
+                        <p style='font-size: 1.1em; line-height: 1.4; margin: 0; color: #ffffff; font-weight: 500;'>
+                            <strong>3 mois continus</strong> de données TomTom sur le corridor de Cotonou
+                        </p>
+                    </div>
+
+                    <!-- Phase 2 -->
+                    <div class='fragment'
+                        style='margin: 12px 0; padding: 16px 20px; background: rgba(46, 204, 113, 0.3); border-radius: 10px; border-left: 4px solid #2ecc71; backdrop-filter: blur(5px);'>
+                        <h3 style='margin: 0 0 8px 0; color: #ffffff; font-size: 1.1em; font-weight: bold;'>🤖 PHASE 2 :
+                            Entraînement IA</h3>
+                        <p style='font-size: 1.1em; line-height: 1.4; margin: 0; color: #ffffff; font-weight: 500;'>
+                            <strong>1 million+ de configurations</strong> simulées sur <strong>5-7
+                                intersections</strong> du corridor
+                        </p>
+                    </div>
+
+                    <!-- Phase 3 -->
+                    <div class='fragment'
+                        style='margin: 12px 0; padding: 16px 20px; background: rgba(243, 156, 18, 0.3); border-radius: 10px; border-left: 4px solid #f39c12; backdrop-filter: blur(5px);'>
+                        <h3 style='margin: 0 0 8px 0; color: #ffffff; font-size: 1.1em; font-weight: bold;'>✅ PHASE 3 :
+                            Validation</h3>
+                        <p style='font-size: 1.1em; line-height: 1.4; margin: 0; color: #ffffff; font-weight: 500;'>
+                            Tests sur scénarios réels • Objectif <strong>-30% temps d'attente</strong>
+                        </p>
+                    </div>
+                </div>
+
+                <p class='fragment' style='margin-top: 25px; font-size: 1.05em; color: #ffffff; font-weight: bold;'>
+                    ⏱️ Timeline total : <span style='color: #f39c12;'>~6 mois</span> du prototype au système validé
+                </p>
+            </section>
+
+
+            <!-- SLIDE 16: BUSINESS MODEL (V2 - REFACTORED) -->
+            <section
+                data-background-image='https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=1920&auto=format&fit=crop'
+                data-background-opacity='0.15'
+                data-background-gradient='linear-gradient(135deg, rgba(22, 160, 133, 0.9), rgba(41, 128, 185, 0.9))'>
+                <!-- <h2 style='font-size: 1.8em; margin-bottom: 15px;'>Notre Offre : L'IA Routière Clé-en-Main</h2> -->
+                <p style='font-size: 1em; color: #ecf0f1; margin-bottom: 30px;'>
+                    Nous ne vendons pas un logiciel. Nous vendons la performance.
+                </p>
+
+                <div
+                    style='display: flex; justify-content: space-around; align-items: flex-start; text-align: center; gap: 18px;'>
+
+                    <!-- Ce qu'on vend -->
+                    <div class='fragment'
+                        style='flex: 1; padding: 18px 16px; background: rgba(0,0,0,0.25); border-radius: 12px; border-bottom: 4px solid #2ecc71;'>
+                        <h3 style='font-size: 1.15em; color: #2ecc71; margin: 0 0 10px 0;'>💡 LE PRODUIT</h3>
+                        <p style='font-size: 0.85em; line-height: 1.35; margin: 5;'>
+                            Une <strong>licence d'accès</strong> aux <strong>checkpoints</strong> RL : le "cerveau" de
+                            l'IA entraîné et prêt à l'emploi.
+                        </p>
+                    </div>
+
+                    <!-- À qui on le vend -->
+                    <div class='fragment'
+                        style='flex: 1; padding: 18px 16px; background: rgba(0,0,0,0.25); border-radius: 12px; border-bottom: 4px solid #3498db;'>
+                        <h3 style='font-size: 1.15em; color: #3498db; margin: 0 0 10px 0;'>🎯 LA CIBLE</h3>
+                        <p style='font-size: 0.85em; line-height: 1.35; margin: 0;'>
+                            <strong>Gouvernements</strong> et <strong>Municipalités</strong> cherchant une solution sans
+                            investir des millions en R&D.
+                        </p>
+                    </div>
+
+                    <!-- La valeur -->
+                    <div class='fragment'
+                        style='flex: 1; padding: 18px 16px; background: rgba(0,0,0,0.25); border-radius: 12px; border-bottom: 4px solid #f1c40f;'>
+                        <h3 style='font-size: 1.15em; color: #f1c40f; margin: 0 0 10px 0;'>💰 LA VALEUR</h3>
+                        <p style='font-size: 0.85em; line-height: 1.35; margin: 0;'>
+                            Gain de <strong>5 ans d'installation</strong> et de <strong>millions en R&D</strong>.
+                            Solution de pointe immédiatement opérationnelle.
+                        </p>
+                    </div>
+
+                </div>
+
+                <p class='fragment'
+                    style='margin-top: 32px; font-size: 1.02em; color: #ffffff; font-weight: bold; text-shadow: 1px 1px 2px #000;'>
+                    C'est le modèle qui marche. Vous payez pour l'intelligence, pas pour la construire.
+                </p>
+            </section>
+
+            <!-- SLIDE 17: AVANTAGES CONCRETS (MODIFIED FROM OLD SLIDE 11) -->
+            <!-- <section
+                data-background-image='https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1920&auto=format&fit=crop'
+                data-background-opacity='0.12' data-auto-animate>
+                <h2>💡 Pourquoi Est-ce Révolutionnaire ?</h2>
+                <div style='text-align: left; max-width: 900px; margin: 0 auto;'>
+                    <div class='fragment'
+                        style='margin: 20px 0; padding: 20px; background: rgba(52, 152, 219, 0.2); border-left: 5px solid #3498db;'>
+                        <strong>💰 Économique</strong> : Investissement initial réduit, pas de refonte d'infrastructure
+                    </div>
+                    <div class='fragment'
+                        style='margin: 20px 0; padding: 20px; background: rgba(46, 204, 113, 0.2); border-left: 5px solid #2ecc71;'>
+                        <strong>🌱 Écologique</strong> : Jusqu'à -30% d'émissions de CO₂
+                    </div>
+                    <div class='fragment'
+                        style='margin: 20px 0; padding: 20px; background: rgba(243, 156, 18, 0.2); border-left: 5px solid #f39c12;'>
+                        <strong>🔄 Évolutif</strong> : Adaptation automatique et continue aux conditions du trafic
+                    </div>
+                    <div class='fragment'
+                        style='margin: 20px 0; padding: 20px; background: rgba(155, 89, 182, 0.2); border-left: 5px solid #9b59b6;'>
+                        <strong>🔮 Prédictif</strong> : Anticipation des pics (événements, heures de pointe, incidents)
+                    </div>
+                </div>
+            </section> -->
+
+            <!-- SLIDE 18: TECHNOLOGIES Àlì Bí (MODIFIED) -->
+            <!-- <section data-background-gradient='linear-gradient(to right, #834d9b, #d04ed6)' data-auto-animate>
+                <h2 data-id='main-key' style='margin-bottom: 15px;'>🛠️ Architecture Technique Àlì Bí</h2>
+                <h3 style='margin-bottom: 25px; color: #ddd; font-size: 1em;'>Les briques essentielles</h3>
+                <div
+                    style='display: grid; grid-template-columns: repeat(2, 1fr); gap: 35px; margin-top: 20px; max-width: 1050px; margin-left: auto; margin-right: auto;'>
+                    <div class='fragment'
+                        style='padding: 25px 30px; background: linear-gradient(145deg, rgba(52, 152, 219, 0.2), rgba(52, 152, 219, 0.05)); border-radius: 14px; border: 2px solid rgba(52, 152, 219, 0.4); box-shadow: 0 8px 24px rgba(0,0,0,0.3);'>
+                        <h3 style='font-size: 1.3em; margin-bottom: 20px;'>📊 Sources de Données</h3>
+                        <p style='font-size: 1.05em; margin: 15px 0;'>✅ <strong>API TomTom Traffic</strong></p>
+                        <p style='font-size: 0.9em; color: #ccc; margin-left: 30px; margin-top: 8px;'>Flux de trafic en
+                            temps réel</p>
+                        <p style='font-size: 1.05em; margin: 15px 0; margin-top: 22px;'>✅ <strong>Modélisation
+                                macroscopique</strong></p>
+                        <p style='font-size: 0.9em; color: #ccc; margin-left: 30px; margin-top: 8px;'>Adaptée aux
+                            données limitées</p>
+                    </div>
+                    <div class='fragment'
+                        style='padding: 25px 30px; background: linear-gradient(145deg, rgba(46, 204, 113, 0.2), rgba(46, 204, 113, 0.05)); border-radius: 14px; border: 2px solid rgba(46, 204, 113, 0.4); box-shadow: 0 8px 24px rgba(0,0,0,0.3);'>
+                        <h3 style='font-size: 1.3em; margin-bottom: 20px;'>🤖 Intelligence Artificielle</h3>
+                        <p style='font-size: 1.05em; margin: 15px 0;'>✅ <strong>Apprentissage par Renforcement</strong>
+                        </p>
+                        <p style='font-size: 0.9em; color: #ccc; margin-left: 30px; margin-top: 8px;'>Q-Learning, SARSA
+                            contextualisé</p>
+                        <p style='font-size: 1.05em; margin: 15px 0; margin-top: 22px;'>✅ <strong>Python +
+                                NumPy</strong></p>
+                        <p style='font-size: 0.9em; color: #ccc; margin-left: 30px; margin-top: 8px;'>Stack léger et
+                            performant</p>
+                    </div>
+                </div>
+                <p class='fragment' style='margin-top: 30px; font-size: 1em; color: #bbb; font-style: italic;'>
+                    💡 Une approche simple mais efficace pour des résultats concrets
+                </p>
+            </section> -->
+
+            <!-- SLIDE 13: ROADMAP/PLAN D'ACTION (MODIFIED) -->
+            <!-- <section
+                data-background-image='https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?q=80&w=1920&auto=format&fit=crop'
+                data-background-opacity='0.1'>
+                <h2>🗺️ Notre Feuille de Route</h2>
+                <h3 style='margin-bottom: 25px;'>D'Àlì Bí à la Transformation Complète</h3>
+                <div style='text-align: left; max-width: 850px; margin: 0 auto; font-size: 0.85em;'>
+                    <div class='fragment'
+                        style='margin: 12px 0; padding: 18px; background: rgba(52, 152, 219, 0.3); border-radius: 10px; border-left: 5px solid #3498db;'>
+                        <strong>PHASE 1 (Mois 1-3) : Àlì Bí v1.0 - Les Fondations</strong>
+                        <p style='margin-top: 8px; font-size: 0.95em;'>✅ Modélisation macroscopique + API TomTom •
+                            Algorithme d'apprentissage contextualisé<br>
+                            → Déploiement pilote sur un carrefour stratégique (ex : PK3, Cotonou)</p>
+                    </div>
+                    <div class='fragment'
+                        style='margin: 12px 0; padding: 18px; background: rgba(46, 204, 113, 0.3); border-radius: 10px; border-left: 5px solid #2ecc71;'>
+                        <strong>PHASE 2 (Mois 4-6) : Validation & Expansion</strong>
+                        <p style='margin-top: 8px; font-size: 0.95em;'>✅ Mesure rigoureuse de l'impact terrain •
+                            Calibrage des algorithmes<br>
+                            → Déploiement sur 3-5 carrefours additionnels</p>
+                    </div>
+                    <div class='fragment'
+                        style='margin: 12px 0; padding: 18px; background: rgba(243, 156, 18, 0.3); border-radius: 10px; border-left: 5px solid #f39c12;'>
+                        <strong>PHASE 3 (Mois 7-12) : Hybridation des Sources</strong>
+                        <p style='margin-top: 8px; font-size: 0.95em;'>✅ Déploiement de capteurs locaux • Fusion
+                            intelligente TomTom + capteurs dédiés<br>
+                            → Raffinement significatif de la précision</p>
+                    </div>
+                    <div class='fragment'
+                        style='margin: 12px 0; padding: 18px; background: rgba(155, 89, 182, 0.3); border-radius: 10px; border-left: 5px solid #9b59b6;'>
+                        <strong>PHASE 4 (Année 2+) : Montée en Granularité</strong>
+                        <p style='margin-top: 8px; font-size: 0.95em;'>✅ Enrichissement progressif du modèle •
+                            Intégration vision par ordinateur<br>
+                            → Évolution vers un jumeau numérique de haute fidélité</p>
+                    </div>
+                </div>
+                <p class='fragment' style='margin-top: 25px; font-size: 1.1em; color: var(--brand-primary);'>
+                    <strong>🎯 VISION : D'ici 3-5 ans, Cotonou disposera de son propre "City Brain".<br>
+                        ALI BI est le PREMIER PAS stratégique de cette transformation.</strong>
+                </p>
+            </section> -->
+
+            <!-- SLIDE 14: IMPACT SOCIAL -->
+            <!-- <section data-background-gradient='linear-gradient(120deg, #f093fb 0%, #f5576c 100%)'>
+                <h2>🇧🇯 Impact Transformateur pour le Bénin</h2>
+                <div class='stats-grid'>
+                    <div class='stat-box fragment'>
+                        <div class='big-number'>1h</div>
+                        <p>Récupérée par citoyen<br>chaque jour</p>
+                    </div>
+                    <div class='stat-box fragment'>
+                        <div class='big-number'>15M€</div>
+                        <p>Économies annuelles<br>(carburant + productivité)</p>
+                    </div>
+                    <div class='stat-box fragment'>
+                        <div class='big-number'>5000t</div>
+                        <p>de CO₂ évitées<br>chaque année</p>
+                    </div>
+                </div>
+                <p class='fragment' style='margin-top: 40px; font-size: 1.3em;'>
+                    <strong>+ Une amélioration tangible de la qualité de vie urbaine !</strong>
+                </p>
+            </section> -->
+
+            <!-- SLIDE 15: DÉMO INTERACTIVE (SI POSSIBLE) -->
+            <!-- <section
+                data-background-image='https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=1920&auto=format&fit=crop'
+                data-background-opacity='0.18' data-background-color='#0f0f0f'>
+                <h2>🎮 Démo Interactive</h2>
+                <div style='background: rgba(255,255,255,0.1); padding: 40px; border-radius: 20px;'>
+                    <p style='font-size: 1.5em; margin-bottom: 30px;'>Contrôlez les feux en temps réel !</p>
+                    <div style='display: flex; justify-content: space-around; margin: 30px 0;'>
+                        <button
+                            style='padding: 20px 40px; font-size: 1.2em; background: #e74c3c; border: none; border-radius: 10px; color: white; cursor: pointer;'>
+                            Feu Rouge
+                        </button>
+                        <button
+                            style='padding: 20px 40px; font-size: 1.2em; background: #f39c12; border: none; border-radius: 10px; color: white; cursor: pointer;'>
+                            Feu Orange
+                        </button>
+                        <button
+                            style='padding: 20px 40px; font-size: 1.2em; background: #2ecc71; border: none; border-radius: 10px; color: white; cursor: pointer;'>
+                            Feu Vert
+                        </button>
+                    </div>
+                    <p style='font-size: 0.9em; color: #95a5a6;'>
+                        (Connecter à une simulation SUMO en direct lors de la présentation)
+                    </p>
+                </div> 
+            </section> -->
+
+            <!-- SLIDE 16: COMPARAISON AVEC SOLUTIONS EXISTANTES -->
+            <!-- <section
+                data-background-image='https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=1920&auto=format&fit=crop'
+                data-background-opacity='0.08'>
+                <h2>⚖️ ALI BI vs. Approches Conventionnelles</h2>
+                <table style='width: 100%; font-size: 0.8em; margin-top: 30px;'>
+                    <thead>
+                        <tr style='background: rgba(52, 152, 219, 0.3);'>
+                            <th>Critère</th>
+                            <th>Feux Classiques</th>
+                            <th>Capteurs Fixes</th>
+                            <th>ALI BI 🚀</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Investissement</strong></td>
+                            <td>€</td>
+                            <td>€€€€</td>
+                            <td style='color: #2ecc71;'><strong>€€</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Adaptabilité</strong></td>
+                            <td>❌</td>
+                            <td>⚠️</td>
+                            <td style='color: #2ecc71;'><strong>✅✅✅</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Maintenance</strong></td>
+                            <td>Minimale</td>
+                            <td>Intensive</td>
+                            <td style='color: #2ecc71;'><strong>Automatisée</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Efficacité</strong></td>
+                            <td>30%</td>
+                            <td>60%</td>
+                            <td style='color: #2ecc71;'><strong>90%</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section> -->
+
+
+
+
+
+
+
+
+            <!-- ========================================== -->
+            <!-- SECTION ODD : IMPACT SUR LES OBJECTIFS DE DÉVELOPPEMENT DURABLE -->
+            <!-- ========================================== -->
+
+            <!-- SLIDE INTRO ODD -->
+            <!-- <section
+                data-background-image='https://images.unsplash.com/photo-1569163139394-de4798aa62b6?q=80&w=1920&auto=format&fit=crop'
+                data-background-opacity='0.25'
+                data-background-gradient='linear-gradient(135deg, rgba(26,188,156,0.85), rgba(52,152,219,0.85))'>
+                <h2 style='font-size: 2em; margin-bottom: 30px;'>🌍 Un Projet Local, Un Impact Global</h2>
+                <p style='font-size: 1.3em; line-height: 1.5; max-width: 900px; margin: 0 auto 40px;'>
+                    Au-delà de Cotonou : Notre contribution aux <br>
+                    <strong style='color: var(--brand-primary);'>Objectifs de Développement Durable</strong> des Nations
+                    Unies
+                </p>
+
+                <div
+                    style='display: grid; grid-template-columns: repeat(4, 1fr); gap: 25px; max-width: 1000px; margin: 0 auto;'>
+                    <div class='fragment'
+                        style='background: rgba(255,255,255,0.1); padding: 25px; border-radius: 15px; backdrop-filter: blur(10px);'>
+                        <div style='font-size: 3em; margin-bottom: 10px;'>🏙️</div>
+                        <div style='font-size: 1.1em; font-weight: bold; color: #3498db;'>ODD 11</div>
+                        <div style='font-size: 0.75em; margin-top: 8px;'>Villes Durables</div>
+                    </div>
+                    <div class='fragment'
+                        style='background: rgba(255,255,255,0.1); padding: 25px; border-radius: 15px; backdrop-filter: blur(10px);'>
+                        <div style='font-size: 3em; margin-bottom: 10px;'>💚</div>
+                        <div style='font-size: 1.1em; font-weight: bold; color: #2ecc71;'>ODD 3</div>
+                        <div style='font-size: 0.75em; margin-top: 8px;'>Santé & Bien-être</div>
+                    </div>
+                    <div class='fragment'
+                        style='background: rgba(255,255,255,0.1); padding: 25px; border-radius: 15px; backdrop-filter: blur(10px);'>
+                        <div style='font-size: 3em; margin-bottom: 10px;'>🔬</div>
+                        <div style='font-size: 1.1em; font-weight: bold; color: #e67e22;'>ODD 9</div>
+                        <div style='font-size: 0.75em; margin-top: 8px;'>Innovation</div>
+                    </div>
+                    <div class='fragment'
+                        style='background: rgba(255,255,255,0.1); padding: 25px; border-radius: 15px; backdrop-filter: blur(10px);'>
+                        <div style='font-size: 3em; margin-bottom: 10px;'>🌡️</div>
+                        <div style='font-size: 1.1em; font-weight: bold; color: #27ae60;'>ODD 13</div>
+                        <div style='font-size: 0.75em; margin-top: 8px;'>Action Climatique</div>
+                    </div>
+                </div>
+
+                <aside class='notes'>
+                    <strong>SPEECH:</strong>
+                    <p>Avant de conclure, je veux vous montrer pourquoi ce projet dépasse largement les frontières de
+                        Cotonou.</p>
+                    <p>Ce que nous construisons ici s'inscrit dans un cadre global - celui des Objectifs de
+                        Développement Durable des Nations Unies.</p>
+                    <p>Notre jumeau numérique contribue directement à 4 ODD majeurs :</p>
+                    <ul>
+                        <li>L'ODD 11 sur les villes durables</li>
+                        <li>L'ODD 3 sur la santé</li>
+                        <li>L'ODD 9 sur l'innovation</li>
+                        <li>Et l'ODD 13 sur le changement climatique</li>
+                    </ul>
+                    <p>Voyons comment, concrètement, chaque cible est impactée.</p>
+                </aside>
+            </section> -->
+
+            <!-- SLIDE ODD 11 : VILLES DURABLES -->
+            <section
+                data-background-image='https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?q=80&w=1920&auto=format&fit=crop'
+                data-background-opacity='0.2' data-background-color='#1a5490'>
+                <div style='text-align: left; max-width: 1100px; margin: 0 auto;'>
+                    <div style='display: flex; align-items: center; gap: 25px; margin-bottom: 35px;'>
+                        <div
+                            style='font-size: 4.5em; background: linear-gradient(135deg, #3498db, #2980b9); padding: 30px; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.3);'>
+                            🏙️</div>
+                        <div>
+                            <h2 style='margin: 0; font-size: 1.8em; color: #3498db;'>ODD 11 : Villes Durables</h2>
+                            <p style='margin: 8px 0 0; font-size: 0.85em; color: #95a5a6;'>Rendre les villes inclusives,
+                                sûres, résilientes et durables</p>
+                        </div>
+                    </div>
+
+                    <div
+                        style='background: rgba(52,152,219,0.15); padding: 30px; border-radius: 15px; border-left: 5px solid #3498db; margin-bottom: 30px;'>
+                        <h3 style='margin: 0 0 15px; font-size: 1.3em; color: #3498db;'>📍 Cible 11.6 : Qualité de l'air
+                        </h3>
+                        <p style='font-size: 1.05em; line-height: 1.6; margin: 0;'>
+                            <em>"Réduire l'impact environnemental négatif des villes par habitant, y compris en
+                                accordant une attention particulière à la qualité de l'air"</em>
+                        </p>
+                    </div>
+
+
+
+
+                </div>
+
+                <aside class='notes'>
+                    <strong>SPEECH:</strong>
+                    <p>Commençons par l'ODD 11 - Villes et communautés durables. J'ai choisi la cible 11.6 sur la
+                        qualité de l'air car c'est là que notre impact est le plus direct et mesurable.</p>
+                    <p>Le constat est alarmant : des études scientifiques réalisées à Cotonou en 2018 montrent que les
+                        concentrations de dioxyde d'azote aux heures de pointe dépassent les seuils recommandés par
+                        l'Organisation Mondiale de la Santé.</p>
+                    <p>Notre solution ? En réduisant de 30% les émissions de CO₂ grâce à une meilleure fluidité du
+                        trafic, nous améliorons directement la qualité de l'air que respirent quotidiennement les
+                        habitants.</p>
+                    <p>C'est simple : chaque véhicule qui attend moins au feu rouge, c'est moins de gaz d'échappement
+                        dans l'atmosphère. Multiplié par des milliers de véhicules chaque jour, l'impact devient
+                        considérable.</p>
+                </aside>
+            </section>
+
+            <!-- SLIDE ODD 3 : SANTÉ -->
+            <section
+                data-background-image='https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=1920&auto=format&fit=crop'
+                data-background-opacity='0.2' data-background-color='#0d7377'>
+                <div style='text-align: left; max-width: 1100px; margin: 0 auto;'>
+                    <div style='display: flex; align-items: center; gap: 25px; margin-bottom: 35px;'>
+                        <div
+                            style='font-size: 4.5em; background: linear-gradient(135deg, #2ecc71, #27ae60); padding: 30px; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.3);'>
+                            💚</div>
+                        <div>
+                            <h2 style='margin: 0; font-size: 1.8em; color: #2ecc71;'>ODD 3 : Santé & Bien-être</h2>
+                            <p style='margin: 8px 0 0; font-size: 0.85em; color: #95a5a6;'>Permettre à tous de vivre en
+                                bonne santé</p>
+                        </div>
+                    </div>
+
+                    <div
+                        style='background: rgba(46,204,113,0.15); padding: 30px; border-radius: 15px; border-left: 5px solid #2ecc71; margin-bottom: 30px;'>
+                        <h3 style='margin: 0 0 15px; font-size: 1.3em; color: #2ecc71;'>📍 Cible 3.6 : Sécurité routière
+                        </h3>
+                        <p style='font-size: 1.05em; line-height: 1.6; margin: 0;'>
+                            <em>"Diminuer de moitié à l'échelle mondiale le nombre de décès et de blessures dus à des
+                                accidents de la route"</em>
+                        </p>
+                    </div>
+
+
+
+
+                </div>
+
+                <aside class='notes'>
+                    <strong>SPEECH:</strong>
+                    <p>Passons à l'ODD 3 sur la santé et le bien-être. Ici, j'ai choisi la cible 3.6 sur la sécurité
+                        routière car les chiffres sont dramatiques.</p>
+                    <p>Écoutez bien : en 2021, le Bénin a enregistré 776 décès sur ses routes. Cela représente plus de
+                        deux personnes qui meurent chaque jour dans des accidents de la circulation.</p>
+                    <p>Comment notre projet contribue-t-il à réduire ce fléau ? Un trafic mieux régulé signifie moins de
+                        congestion. Moins de congestion signifie moins de stress et de frustration chez les conducteurs.
+                        Et moins de stress au volant se traduit directement par des comportements plus sûrs et moins
+                        d'accidents.</p>
+                    <p>C'est un effet en cascade : en fluidifiant le trafic, nous créons un environnement routier plus
+                        serein, où les risques d'accidents diminuent naturellement.</p>
+                </aside>
+            </section>
+
+            <!-- SLIDE ODD 9 : INNOVATION -->
+            <section
+                data-background-image='https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1920&auto=format&fit=crop'
+                data-background-opacity='0.2' data-background-color='#2c3e50'>
+                <div style='text-align: left; max-width: 1100px; margin: 0 auto;'>
+                    <div style='display: flex; align-items: center; gap: 25px; margin-bottom: 35px;'>
+                        <div
+                            style='font-size: 4.5em; background: linear-gradient(135deg, #e67e22, #d35400); padding: 30px; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.3);'>
+                            🔬</div>
+                        <div>
+                            <h2 style='margin: 0; font-size: 1.8em; color: #e67e22;'>ODD 9 : Innovation & Infrastructure
+                            </h2>
+                            <p style='margin: 8px 0 0; font-size: 0.85em; color: #95a5a6;'>Bâtir une infrastructure
+                                résiliente et promouvoir l'innovation</p>
+                        </div>
+                    </div>
+
+                    <div
+                        style='background: rgba(230,126,34,0.15); padding: 30px; border-radius: 15px; border-left: 5px solid #e67e22; margin-bottom: 30px;'>
+                        <h3 style='margin: 0 0 15px; font-size: 1.3em; color: #e67e22;'>📍 Cible 9.4 : Modernisation
+                            technologique</h3>
+                        <p style='font-size: 1.05em; line-height: 1.6; margin: 0;'>
+                            <em>"Moderniser l'infrastructure par une utilisation plus rationnelle des ressources et un
+                                recours accru aux technologies"</em>
+                        </p>
+                    </div>
+
+
+
+                </div>
+
+                <aside class='notes'>
+                    <strong>SPEECH:</strong>
+                    <p>L'ODD 9 porte sur l'industrie, l'innovation et les infrastructures. J'ai sélectionné la cible 9.4
+                        sur la modernisation technologique car notre projet en est l'incarnation parfaite.</p>
+                    <p>Pensez-y : nous ne construisons pas une seule nouvelle route, pas un seul nouveau pont. Nous
+                        modernisons l'infrastructure EXISTANTE grâce au numérique et à l'intelligence artificielle.</p>
+                    <p>C'est ce qu'on appelle le "recours accru aux technologies" mentionné dans la cible. Notre jumeau
+                        numérique transforme des feux de signalisation ordinaires en système intelligent adaptatif.</p>
+                    <p>Et l'enjeu est colossal : le coût de l'insécurité routière au Bénin s'élève à 114 milliards de
+                        francs CFA par an. En rendant le réseau routier plus efficace et plus sûr, nous contribuons
+                        directement à réduire ce fardeau économique.</p>
+                    <p>L'infrastructure numérique n'est pas un luxe - c'est devenu aussi essentiel que les routes
+                        elles-mêmes.</p>
+                </aside>
+            </section>
+
+            <!-- SLIDE ODD 13 : CLIMAT -->
+
+            <!-- SLIDE BONUS: ANNEXE TECHNIQUE (SI QUESTIONS) -->
+            <!-- <section
+                data-background-image='https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?q=80&w=1920&auto=format&fit=crop'
+                data-background-opacity='0.1'>
+                <h2>📊 Annexe : Architecture Technique</h2>
+                <div style='background: rgba(255,255,255,0.05); padding: 30px; border-radius: 15px; text-align: left;'>
+                    <h3 style='color: var(--brand-primary); margin-bottom: 20px;'>Architecture en 3 couches</h3>
+                    <div style='display: grid; gap: 20px;'>
+                        <div
+                            style='background: rgba(52,152,219,0.2); padding: 20px; border-radius: 10px; border-left: 4px solid #3498db;'>
+                            <strong>🔵 Couche Données</strong><br>
+                            <span style='font-size: 0.85em;'>Capteurs → API REST → Base de données temps réel (Redis +
+                                PostgreSQL)</span>
+                        </div>
+                        <div
+                            style='background: rgba(46,204,113,0.2); padding: 20px; border-radius: 10px; border-left: 4px solid #2ecc71;'>
+                            <strong>🟢 Couche Simulation</strong><br>
+                            <span style='font-size: 0.85em;'>SUMO Engine → Jumeau Numérique → États du trafic
+                                actualisés</span>
+                        </div>
+                        <div
+                            style='background: rgba(155,89,182,0.2); padding: 20px; border-radius: 10px; border-left: 4px solid #9b59b6;'>
+                            <strong>🟣 Couche IA</strong><br>
+                            <span style='font-size: 0.85em;'>Agent RL (DQN/PPO) → Décisions optimales → Contrôle des
+                                feux</span>
+                        </div>
+                    </div>
+                </div>
+                <p style='font-size: 0.8em; margin-top: 20px; color: #95a5a6;'>
+                    Pipeline temps réel : Données → Simulation → IA → Action (< 500ms) </p>
+            </section> -->
+
+            <!-- SLIDE FINALE: MERCI & CONTRIBUTION -->
+            <section
+                data-background-image='https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1920&auto=format&fit=crop'
+                data-background-opacity='0.2'
+                data-background-gradient='linear-gradient(135deg, rgba(46, 204, 113, 0.9), rgba(52, 152, 219, 0.9))'>
+                <h1 class='glow' style='font-size: 2.2em; margin-bottom: 15px;'>🙏 Merci !</h1>
+                <p style='font-size: 1em; color: #ecf0f1; margin-bottom: 30px;'>
+                    Vous aimez notre solution ?
+                </p>
+
+                <!-- Contribution GitHub -->
+                <div class='fragment'
+                    style='background: rgba(0, 0, 0, 0.4); padding: 25px; border-radius: 16px; margin-bottom: 25px; backdrop-filter: blur(10px);'>
+                    <h3 style='font-size: 1.1em; color: #2ecc71; margin-bottom: 15px;'>💻 Contribuez sur GitHub</h3>
+                    <p style='font-size: 0.85em; color: #ecf0f1; margin-bottom: 12px;'>
+                        <strong><a href='https://github.com/elonmj/Smart-Mobility' target='_blank'
+                                style='color: #3498db; text-decoration: none;'>https://github.com/elonmj/Smart-Mobility</a></strong>
+                    </p>
+                    <div
+                        style='text-align: left; max-width: 750px; margin: 15px auto; font-size: 0.75em; line-height: 1.6;'>
+                        <p style='margin: 8px 0;'>✅ <a href='https://github.com/elonmj/Smart-Mobility/tree/main/Code_RL'
+                                target='_blank' style='color: #2ecc71; text-decoration: none;'>Module Code RL
+                                complet</a> (DQN, Stable-Baselines3)</p>
+                        <p style='margin: 8px 0;'>✅ <a
+                                href='https://github.com/elonmj/Smart-Mobility/tree/main/Collect_data' target='_blank'
+                                style='color: #2ecc71; text-decoration: none;'>Code pour collecte de données via API
+                                TomTom</a></p>
+                        <p style='margin: 8px 0;'>✅ <a
+                                href='https://github.com/elonmj/Smart-Mobility/tree/main/benin-latest' target='_blank'
+                                style='color: #2ecc71; text-decoration: none;'>Code pour récupération des données
+                                OSM</a></p>
+                    </div>
+                </div>
+
+                <!-- Contact -->
+                <div class='fragment'
+                    style='background: rgba(0, 0, 0, 0.4); padding: 22px; border-radius: 16px; backdrop-filter: blur(10px);'>
+                    <h3 style='font-size: 1em; color: #3498db; margin-bottom: 12px;'>📧 Rejoignez l'Aventure</h3>
+                    <p style='font-size: 0.85em; color: #ecf0f1;'>
+                        Contactez-nous : <strong style='color: #f39c12;'>josaphatahouanye@gmail.com</strong>
+                    </p>
+                    <p style='font-size: 0.75em; color: #bdc3c7; margin-top: 10px;'>
+                        Pour faire partie du projet, apporter vos idées ou poser vos questions
+                    </p>
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <script src='https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/dist/reveal.js'></script>
+    <script src='https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/notes/notes.js'></script>
+    <script src='https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/markdown/markdown.js'></script>
+    <script src='https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/highlight/highlight.js'></script>
+    <script src='https://cdn.jsdelivr.net/npm/reveal.js@5.0.4/plugin/zoom/zoom.js'></script>
+    <script src='https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js'></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            transition: 'slide', // none/fade/slide/convex/concave/zoom
+            transitionSpeed: 'default', // default/fast/slow
+            backgroundTransition: 'fade', // none/fade/slide/convex/concave/zoom
+            controls: true,
+            progress: true,
+            center: true,
+            slideNumber: 'c/t',
+            keyboard: true,
+            overview: true,
+            touch: true,
+            loop: false,
+            autoSlide: 0,
+            plugins: [RevealMarkdown, RevealHighlight, RevealNotes, RevealZoom]
+        });
+
+        // Animated Before/After Chart
+        let baChart;
+        const initBeforeAfter = () => {
+            const ctx = document.getElementById('beforeAfterChart');
+            if (!ctx || baChart) return;
+            baChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ["Temps d'attente", "Files d'attente", "Émissions CO₂"],
+                    datasets: [
+                        { label: 'Sans IA', data: [5, 200, 150], backgroundColor: 'rgba(231, 76, 60, .8)' },
+                        { label: 'Avec IA', data: [1.5, 50, 105], backgroundColor: 'rgba(46, 204, 113, .85)' }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    animation: { duration: 1200 },
+                    scales: {
+                        y: { beginAtZero: true, ticks: { color: '#ecf0f1' }, grid: { color: 'rgba(255,255,255,.08)' } },
+                        x: { ticks: { color: '#ecf0f1' }, grid: { display: false } }
+                    },
+                    plugins: { legend: { labels: { color: '#ecf0f1' } } }
+                }
+            });
+        };
+
+        Reveal.on('slidechanged', event => {
+            if (event.currentSlide && event.currentSlide.querySelector('#beforeAfterChart')) {
+                initBeforeAfter();
+            }
+        });
+        Reveal.on('ready', () => initBeforeAfter());
+    </script>
+</body>
+</html>
