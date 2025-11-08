@@ -770,9 +770,6 @@
                 </div>
             </section> -->
 
-            <!-- SLIDE 14: CE QUI EST DÉJÀ FAIT - LA DÉMO CONCRÈTE -->
-
-
             <!-- SLIDE 15: DONNÉES COLLECTÉES - INFRASTRUCTURE ROUTIÈRE BÉNIN -->
             <section
                 data-background-image='https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1920&auto=format&fit=crop'
@@ -1000,161 +997,100 @@
                 </aside>
             </section>
 
-            <!-- SLIDE 17: CODE RL (DQN) - ARCHITECTURE TECHNIQUE -->
+            <!-- SLIDE: LE PRODUIT FINAL - CONCRÈTEMENT -->
             <section
-                data-background-image='https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1920&auto=format&fit=crop'
+                data-background-image='https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1920&auto=format&fit=crop'
                 data-background-opacity='0.12'
-                data-background-gradient='linear-gradient(to bottom, rgba(142,68,173,0.85), rgba(41,128,185,0.85))'>
+                data-background-gradient='linear-gradient(to bottom, rgba(46,204,113,0.85), rgba(52,152,219,0.85))'>
 
-                <h2 class='glow' style='font-size: 1.6em; margin-bottom: 8px;'>🤖 Architecture RL - Deep Q-Network (DQN)
+                <h2 class='glow' style='font-size: 1.5em; margin-bottom: 10px;'>🎯 Concrètement : À Quoi Ça Ressemble ?
                 </h2>
-                <!-- <p style='font-size: 0.8em; color: #ecf0f1; font-weight: 300; margin-bottom: 25px;'>Code Complet sur GitHub - Stable-Baselines3</p> -->
+                <p style='font-size: 0.8em; color: #ecf0f1; font-weight: 300; margin-bottom: 20px;'>Le Produit Final en Action</p>
 
-                <div
-                    style='display: grid; grid-template-columns: 1fr 1fr; gap: 18px; max-width: 1000px; margin: 0 auto;'>
-
-                    <!-- Architecture RL -->
+                <div style='max-width: 1000px; margin: 0 auto;'>
+                    
+                    <!-- Le Dashboard de Contrôle -->
                     <div class='fragment'
-                        style='background: rgba(0,0,0,0.5); padding: 18px; border-radius: 12px; border: 2px solid rgba(142,68,173,0.6); backdrop-filter: blur(10px);'>
-                        <h3 style='color: #8e44ad; margin-bottom: 12px; font-size: 1.1em;'>🧠 ALGORITHME DQN</h3>
-                        <div style='text-align: left; line-height: 1.5; font-size: 0.7em;'>
-                            <p style='margin: 6px 0;'>🎯 <strong>Espace d'action:</strong> 2 actions discrètes</p>
-                            <p style='margin: 5px 0 5px 16px; font-size: 0.9em; color: #bdc3c7;'>0: Maintenir phase
-                                actuelle</p>
-                            <p style='margin: 5px 0 5px 16px; font-size: 0.9em; color: #bdc3c7;'>1: Changer de phase</p>
-                            <p style='margin: 6px 0;'>📊 <strong>Observations:</strong> 43 dimensions</p>
-                            <p style='margin: 5px 0 5px 16px; font-size: 0.9em; color: #bdc3c7;'>Densités, vitesses,
-                                files, timing</p>
-                            <p style='margin: 6px 0;'>🎁 <strong>Récompense:</strong> Multi-objectif</p>
-                            <p style='margin: 5px 0 5px 16px; font-size: 0.9em; color: #bdc3c7;'>Temps d'attente, débit,
-                                files</p>
+                        style='background: rgba(0,0,0,0.6); padding: 20px; border-radius: 12px; border: 2px solid rgba(46,204,113,0.6); margin-bottom: 15px;'>
+                        <h3 style='color: #2ecc71; margin-bottom: 12px; font-size: 1.1em;'>📊 DASHBOARD DE CONTRÔLE</h3>
+                        <div style='display: grid; grid-template-columns: 1fr 1fr; gap: 15px; font-size: 0.72em; text-align: left;'>
+                            <div>
+                                <p style='margin: 5px 0;'>🗺️ <strong>Carte temps réel</strong> de Cotonou</p>
+                                <p style='margin: 5px 0; color: #95a5a6;'>Chaque carrefour avec son état actuel</p>
+                                <p style='margin: 5px 0;'>🚦 <strong>État des feux</strong> en direct</p>
+                                <p style='margin: 5px 0; color: #95a5a6;'>Vert/Rouge + temps restant</p>
+                            </div>
+                            <div>
+                                <p style='margin: 5px 0;'>📈 <strong>Métriques live</strong></p>
+                                <p style='margin: 5px 0; color: #95a5a6;'>Temps d'attente, débit, files</p>
+                                <p style='margin: 5px 0;'>⚡ <strong>Décisions IA</strong> expliquées</p>
+                                <p style='margin: 5px 0; color: #95a5a6;'>Pourquoi le feu a changé maintenant</p>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Composants Système -->
+                    <!-- L'API de Requêtes -->
                     <div class='fragment'
-                        style='background: rgba(0,0,0,0.5); padding: 18px; border-radius: 12px; border: 2px solid rgba(52,152,219,0.6); backdrop-filter: blur(10px);'>
-                        <h3 style='color: #3498db; margin-bottom: 12px; font-size: 1.1em;'>🏗️ STACK TECHNIQUE</h3>
-                        <div style='text-align: left; line-height: 1.4; font-size: 0.7em;'>
-                            <p style='margin: 5px 0;'>🐍 <strong>Python 3.10+</strong> | PyTorch backend</p>
-                            <p style='margin: 5px 0;'>🤖 <strong>Stable-Baselines3</strong> (DQN)</p>
-                            <p style='margin: 5px 0;'>🏋️ <strong>Gymnasium</strong> (Env custom)</p>
-                            <p style='margin: 5px 0;'>🚗 <strong>ARZ Simulator</strong> (Trafic multi-classe)</p>
-                            <p style='margin: 5px 0;'>📊 <strong>Pandas/NumPy</strong> (Data pipeline)</p>
-                            <p style='margin: 5px 0;'>🗺️ <strong>GeoPandas</strong> (Spatial analysis)</p>
+                        style='background: rgba(0,0,0,0.6); padding: 20px; border-radius: 12px; border: 2px solid rgba(52,152,219,0.6); margin-bottom: 15px;'>
+                        <h3 style='color: #3498db; margin-bottom: 12px; font-size: 1.1em;'>🔌 API DE DÉCISIONS IA</h3>
+                        <div style='font-size: 0.72em; text-align: left;'>
+                            <p style='margin: 8px 0;'><strong style='color: #3498db;'>Les villes envoient leurs données trafic →</strong></p>
+                            <p style='margin: 8px 0; margin-left: 20px; color: #ecf0f1;'>Notre IA répond : "Garde le feu vert 30s de plus" ou "Change maintenant"</p>
+                            <p style='margin: 8px 0;'><strong style='color: #2ecc71;'>Modèle SaaS (Software as a Service)</strong></p>
+                            <p style='margin: 8px 0; margin-left: 20px; color: #95a5a6;'>Abonnement mensuel par carrefour géré</p>
+                            <p style='margin: 8px 0;'><strong style='color: #f39c12;'>Le modèle s'améliore en continu</strong></p>
+                            <p style='margin: 8px 0; margin-left: 20px; color: #95a5a6;'>Plus il reçoit de données, plus il devient intelligent</p>
                         </div>
                     </div>
 
-                    <!-- Code Snippet - Architecture -->
-                    <!-- <div class='fragment' style='background: rgba(0,0,0,0.7); padding: 16px; border-radius: 12px; border: 2px solid rgba(46,204,113,0.6); backdrop-filter: blur(10px); grid-column: 1 / -1; font-family: "Courier New", monospace;'>
-                        <h3 style='color: #2ecc71; margin-bottom: 10px; font-size: 0.95em;'>💻 CODE SNIPPET - train_dqn.py</h3>
-                        <pre style='background: rgba(0,0,0,0.5); padding: 12px; border-radius: 8px; font-size: 0.6em; line-height: 1.4; text-align: left; overflow-x: auto;'><code style='color: #ecf0f1;'><span style='color: #f39c12;'>from</span> stable_baselines3 <span style='color: #f39c12;'>import</span> DQN
-<span style='color: #f39c12;'>from</span> env.traffic_signal_env <span style='color: #f39c12;'>import</span> TrafficSignalEnv
-
-<span style='color: #95a5a6;'># Création environnement Gymnasium custom</span>
-env = TrafficSignalEnv(
-    endpoint_client=arz_client,
-    signal_controller=controller,
-    config=env_config,
-    branch_ids=[<span style='color: #e74c3c;'>"branch_0"</span>, <span style='color: #e74c3c;'>"branch_1"</span>, <span style='color: #e74c3c;'>"branch_2"</span>, <span style='color: #e74c3c;'>"branch_3"</span>]
-)
-
-<span style='color: #95a5a6;'># Agent DQN avec réseau de neurones profond</span>
-model = DQN(
-    policy=<span style='color: #e74c3c;'>"MlpPolicy"</span>,
-    env=env,
-    learning_rate=<span style='color: #e74c3c;'>1e-4</span>,
-    buffer_size=<span style='color: #e74c3c;'>50000</span>,
-    exploration_fraction=<span style='color: #e74c3c;'>0.3</span>,
-    target_update_interval=<span style='color: #e74c3c;'>1000</span>
-)
-
-<span style='color: #95a5a6;'># Entraînement sur 100k timesteps</span>
-model.learn(total_timesteps=<span style='color: #e74c3c;'>100_000</span>, log_interval=<span style='color: #e74c3c;'>10</span>)</code></pre>
-                        <p style='margin-top: 8px; font-size: 0.6em; color: #95a5a6;'>
-                            📂 Repository: <strong style='color: #3498db;'>github.com/elonmj/Smart-Mobility/Code_RL</strong> | 760 lignes train_dqn.py + architecture modulaire complète
-                        </p>
-                    </div> -->
-
-                    <!-- Métriques Performance -->
+                    <!-- Ce Qu'on Vend -->
                     <div class='fragment'
-                        style='background: rgba(0,0,0,0.5); padding: 16px; border-radius: 12px; border: 2px solid rgba(241,196,15,0.6); backdrop-filter: blur(10px); grid-column: 1 / -1;'>
-                        <h3 style='color: #f1c40f; margin-bottom: 10px; font-size: 0.95em;'>📊 FONCTION DE RÉCOMPENSE
-                            MULTI-OBJECTIF</h3>
-                        <div
-                            style='display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; font-size: 0.65em;'>
-                            <div style='background: rgba(231,76,60,0.3); padding: 8px; border-radius: 8px;'>
-                                <strong style='color: #e74c3c;'>Temps d'attente</strong><br>
-                                Poids: <strong>1.2</strong>
+                        style='background: rgba(0,0,0,0.6); padding: 20px; border-radius: 12px; border: 2px solid rgba(241,196,15,0.6);'>
+                        <h3 style='color: #f1c40f; margin-bottom: 10px; font-size: 1.1em;'>💰 CE QU'ON VEND</h3>
+                        <div style='display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; font-size: 0.68em;'>
+                            <div style='background: rgba(46,204,113,0.2); padding: 10px; border-radius: 8px;'>
+                                <strong style='color: #2ecc71;'>ACCÈS API</strong><br>
+                                <span style='font-size: 0.9em; color: #ecf0f1;'>Requêtes illimitées</span>
                             </div>
-                            <div style='background: rgba(52,152,219,0.3); padding: 8px; border-radius: 8px;'>
-                                <strong style='color: #3498db;'>Longueur files</strong><br>
-                                Poids: <strong>0.6</strong>
+                            <div style='background: rgba(52,152,219,0.2); padding: 10px; border-radius: 8px;'>
+                                <strong style='color: #3498db;'>DASHBOARD</strong><br>
+                                <span style='font-size: 0.9em; color: #ecf0f1;'>Monitoring 24/7</span>
                             </div>
-                            <div style='background: rgba(46,204,113,0.3); padding: 8px; border-radius: 8px;'>
-                                <strong style='color: #2ecc71;'>Débit trafic</strong><br>
-                                Poids: <strong>1.0</strong>
-                            </div>
-                            <div style='background: rgba(241,196,15,0.3); padding: 8px; border-radius: 8px;'>
-                                <strong style='color: #f39c12;'>Pénalité switches</strong><br>
-                                Poids: <strong>0.1</strong>
+                            <div style='background: rgba(241,196,15,0.2); padding: 10px; border-radius: 8px;'>
+                                <strong style='color: #f39c12;'>SUPPORT</strong><br>
+                                <span style='font-size: 0.9em; color: #ecf0f1;'>Maintenance + MAJ</span>
                             </div>
                         </div>
                     </div>
 
                 </div>
 
-                <aside class='notes'>
-                    <strong>SLIDE CODE RL (DQN) - 1min30</strong><br><br>
+                <p class='fragment'
+                    style='margin-top: 20px; font-size: 0.95em; color: #ffffff; font-weight: bold;'>
+                    💡 Pas un logiciel à installer. Pas de matériel coûteux. Juste une connexion internet et une décision intelligente toutes les 3 secondes.
+                </p>
 
-                    <strong>MESSAGE CLÉ:</strong> "Ce n'est pas un concept. C'est du CODE qui tourne."<br><br>
+                <aside class='notes'>
+                    <strong>SLIDE PRODUIT FINAL - 1min30</strong><br><br>
+
+                    <strong>MESSAGE CLÉ:</strong> "Voici exactement ce que les villes obtiennent quand elles nous paient."<br><br>
 
                     <strong>SCRIPT:</strong><br>
-                    "Avec les données en main, nous avons construit le cerveau du système : un agent d'apprentissage par
-                    renforcement basé sur l'algorithme Deep Q-Network."<br><br>
+                    "Oublions la technique un instant. Voici ce que ça donne CONCRÈTEMENT pour une ville comme Cotonou :"<br><br>
 
-                    [Fragment 1 - Algorithme DQN]<br>
-                    "L'agent apprend à prendre 2 décisions : maintenir le feu actuel ou changer de phase. Cela semble
-                    simple, mais il doit analyser 43 dimensions d'observations - densités de véhicules, vitesses
-                    moyennes, longueurs de files, timing des phases."<br><br>
+                    [Fragment 1 - Dashboard]<br>
+                    "Un dashboard web accessible depuis n'importe quel navigateur. La municipalité voit tous ses carrefours sur une carte en temps réel. Chaque feu affiche son état actuel - vert ou rouge - et le temps restant. Les métriques clés sont là : temps d'attente moyen, débit de véhicules, longueur des files. Et surtout, l'IA EXPLIQUE ses décisions. Si elle prolonge un feu vert, vous savez pourquoi."<br><br>
 
-                    "La récompense est multi-objectif : minimiser le temps d'attente (poids 1.2), réduire les files
-                    (0.6), maximiser le débit (1.0), et éviter les changements trop fréquents (pénalité 0.1)."<br><br>
+                    [Fragment 2 - API]<br>
+                    "Mais le vrai produit, c'est l'API. Les capteurs de trafic de la ville - caméras, boucles magnétiques, ou même TomTom - envoient leurs données. Notre IA répond en temps réel : 'Garde le feu vert 30 secondes de plus' ou 'Change maintenant'. C'est un modèle SaaS - Software as a Service. La ville paie un abonnement mensuel par carrefour géré. Et le modèle s'AMÉLIORE en continu. Plus il reçoit de données de différentes villes, plus il devient intelligent. Chaque client bénéficie de l'apprentissage collectif."<br><br>
 
-                    [Fragment 2 - Stack Technique]<br>
-                    "Stack 100% Python : Stable-Baselines3 pour le DQN, Gymnasium pour l'environnement custom, ARZ
-                    Simulator pour modéliser le trafic multi-classe (motos + voitures), GeoPandas pour l'analyse
-                    spatiale."<br><br>
+                    [Fragment 3 - Ce qu'on vend]<br>
+                    "Trois choses dans l'offre : l'accès API avec requêtes illimitées, le dashboard de monitoring 24/7, et le support avec maintenance et mises à jour régulières du modèle. Pas de logiciel à installer. Pas de serveurs à gérer. Pas de matériel coûteux. Juste une connexion internet et une décision intelligente toutes les 3 secondes."<br><br>
 
-                    [Fragment 3 - Code Snippet]<br>
-                    "Voici le code RÉEL. Création de l'environnement Gymnasium, agent DQN avec exploration
-                    epsilon-greedy, buffer de replay de 50 000 expériences, entraînement sur 100 000 timesteps. Tout est
-                    sur GitHub - 760 lignes pour train_dqn.py, architecture modulaire complète."<br><br>
-
-                    [Fragment 4 - Métriques]<br>
-                    "La fonction de récompense équilibre 4 objectifs. On ne veut pas juste fluidifier le trafic, on veut
-                    le faire de manière INTELLIGENTE - sans créer d'effet rebond."<br><br>
-
-                    <strong>STATISTIQUES À RETENIR:</strong><br>
-                    • 2 actions discrètes (maintenir/changer phase)<br>
-                    • 43 dimensions d'observation (état trafic complet)<br>
-                    • 760 lignes de code train_dqn.py<br>
-                    • 100,000 timesteps d'entraînement<br>
-                    • 4 objectifs de récompense pondérés<br><br>
-
-                    <strong>ANTICIPATION Q&A:</strong><br>
-                    Q: "Pourquoi DQN et pas A3C ou PPO ?"<br>
-                    R: "DQN est un excellent choix pour espaces d'actions DISCRETS (maintenir/changer). A3C et PPO
-                    brillent sur actions continues. Pour les feux de signalisation, DQN offre le meilleur ratio
-                    performance/complexité."<br><br>
-
-                    Q: "Combien de temps pour entraîner le modèle ?"<br>
-                    R: "Sur un laptop standard (CPU), environ 2-3 heures pour 100k timesteps. Sur GPU, moins de 30
-                    minutes. Une fois entraîné, l'inférence est INSTANTANÉE - quelques millisecondes."<br><br>
-
-                    <strong>TRANSITION:</strong> "Et maintenant, regardons ce qui est DÉJÀ opérationnel..."
+                    <strong>TRANSITION:</strong> "Et le modèle économique derrière tout ça..."
                 </aside>
             </section>
+
             <section
                 data-background-image='https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1920&auto=format&fit=crop'
                 data-background-opacity='0.15' data-background-color='#0f0f0f'>
@@ -1256,158 +1192,73 @@ model.learn(total_timesteps=<span style='color: #e74c3c;'>100_000</span>, log_in
             </section>
 
 
-            <!-- SLIDE 16: BUSINESS MODEL (V2 - REFACTORED) -->
+            <!-- SLIDE 16: BUSINESS MODEL (V3 - SaaS/API MODEL) -->
             <section
                 data-background-image='https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=1920&auto=format&fit=crop'
                 data-background-opacity='0.15'
                 data-background-gradient='linear-gradient(135deg, rgba(22, 160, 133, 0.9), rgba(41, 128, 185, 0.9))'>
-                <!-- <h2 style='font-size: 1.8em; margin-bottom: 15px;'>Notre Offre : L'IA Routière Clé-en-Main</h2> -->
-                <p style='font-size: 1em; color: #ecf0f1; margin-bottom: 30px;'>
-                    Nous ne vendons pas un logiciel. Nous vendons la performance.
+                <h2 style='font-size: 1.6em; margin-bottom: 12px;'>💼 NOTRE BUSINESS MODEL</h2>
+                <p style='font-size: 0.95em; color: #ecf0f1; margin-bottom: 25px;'>
+                    Un modèle SaaS simple : <strong>Abonnement par intersection gérée</strong>
                 </p>
 
-                <div
-                    style='display: flex; justify-content: space-around; align-items: flex-start; text-align: center; gap: 18px;'>
+                <div style='display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-bottom: 25px;'>
+
+                    <!-- Comment ça marche -->
+                    <div class='fragment'
+                        style='padding: 18px 16px; background: rgba(0,0,0,0.25); border-radius: 12px; border-left: 4px solid #3498db;'>
+                        <h3 style='font-size: 1.1em; color: #3498db; margin: 0 0 12px 0;'>🔄 COMMENT ÇA MARCHE</h3>
+                        <p style='font-size: 0.72em; line-height: 1.4; margin: 8px 0; text-align: left;'>
+                            1️⃣ La ville envoie ses <strong>données trafic en temps réel</strong><br>
+                            2️⃣ Notre <strong>IA cloud</strong> analyse et répond instantanément<br>
+                            3️⃣ <strong>Décisions optimales</strong> appliquées aux feux de signalisation<br>
+                            4️⃣ L'IA <strong>s'améliore en continu</strong> avec chaque requête
+                        </p>
+                    </div>
 
                     <!-- Ce qu'on vend -->
                     <div class='fragment'
-                        style='flex: 1; padding: 18px 16px; background: rgba(0,0,0,0.25); border-radius: 12px; border-bottom: 4px solid #2ecc71;'>
-                        <h3 style='font-size: 1.15em; color: #2ecc71; margin: 0 0 10px 0;'>💡 LE PRODUIT</h3>
-                        <p style='font-size: 0.85em; line-height: 1.35; margin: 5;'>
-                            Une <strong>licence d'accès</strong> aux <strong>checkpoints</strong> RL : le "cerveau" de
-                            l'IA entraîné et prêt à l'emploi.
+                        style='padding: 18px 16px; background: rgba(0,0,0,0.25); border-radius: 12px; border-left: 4px solid #2ecc71;'>
+                        <h3 style='font-size: 1.1em; color: #2ecc71; margin: 0 0 12px 0;'>💡 CE QU'ON VEND</h3>
+                        <p style='font-size: 0.72em; line-height: 1.4; margin: 8px 0; text-align: left;'>
+                            ✅ <strong>Accès API illimité</strong> (requêtes temps réel)<br>
+                            ✅ <strong>Dashboard de monitoring</strong> (24/7)<br>
+                            ✅ <strong>Support & mises à jour</strong> continues<br>
+                            ✅ <strong>Amélioration collective</strong> (plus de villes = meilleure IA)
                         </p>
                     </div>
 
-                    <!-- À qui on le vend -->
+                    <!-- Tarification -->
                     <div class='fragment'
-                        style='flex: 1; padding: 18px 16px; background: rgba(0,0,0,0.25); border-radius: 12px; border-bottom: 4px solid #3498db;'>
-                        <h3 style='font-size: 1.15em; color: #3498db; margin: 0 0 10px 0;'>🎯 LA CIBLE</h3>
-                        <p style='font-size: 0.85em; line-height: 1.35; margin: 0;'>
-                            <strong>Gouvernements</strong> et <strong>Municipalités</strong> cherchant une solution sans
-                            investir des millions en R&D.
+                        style='padding: 18px 16px; background: rgba(0,0,0,0.25); border-radius: 12px; border-left: 4px solid #f39c12;'>
+                        <h3 style='font-size: 1.1em; color: #f39c12; margin: 0 0 12px 0;'>💰 TARIFICATION</h3>
+                        <p style='font-size: 0.72em; line-height: 1.4; margin: 8px 0; text-align: left;'>
+                            📍 <strong>Abonnement mensuel par intersection</strong><br>
+                            📊 Tarif dégressif selon le nombre d'intersections<br>
+                            🚀 Pas d'investissement initial en R&D<br>
+                            ⚡ Déploiement en <strong>quelques semaines</strong>
                         </p>
                     </div>
 
-                    <!-- La valeur -->
+                    <!-- Valeur ajoutée -->
                     <div class='fragment'
-                        style='flex: 1; padding: 18px 16px; background: rgba(0,0,0,0.25); border-radius: 12px; border-bottom: 4px solid #f1c40f;'>
-                        <h3 style='font-size: 1.15em; color: #f1c40f; margin: 0 0 10px 0;'>💰 LA VALEUR</h3>
-                        <p style='font-size: 0.85em; line-height: 1.35; margin: 0;'>
-                            Gain de <strong>5 ans d'installation</strong> et de <strong>millions en R&D</strong>.
-                            Solution de pointe immédiatement opérationnelle.
+                        style='padding: 18px 16px; background: rgba(0,0,0,0.25); border-radius: 12px; border-left: 4px solid #9b59b6;'>
+                        <h3 style='font-size: 1.1em; color: #9b59b6; margin: 0 0 12px 0;'>🎯 VALEUR AJOUTÉE</h3>
+                        <p style='font-size: 0.72em; line-height: 1.4; margin: 8px 0; text-align: left;'>
+                            ⏱️ Économie de <strong>5+ ans de R&D</strong><br>
+                            💵 Économie de <strong>millions en développement</strong><br>
+                            🌍 Bénéfice de l'<strong>apprentissage collectif</strong><br>
+                            📈 ROI mesurable dès le <strong>premier mois</strong>
                         </p>
                     </div>
 
                 </div>
 
                 <p class='fragment'
-                    style='margin-top: 32px; font-size: 1.02em; color: #ffffff; font-weight: bold; text-shadow: 1px 1px 2px #000;'>
-                    C'est le modèle qui marche. Vous payez pour l'intelligence, pas pour la construire.
+                    style='margin-top: 18px; font-size: 0.95em; color: #ffffff; font-weight: bold; text-shadow: 1px 1px 2px #000;'>
+                    🚀 Vous payez pour l'intelligence, pas pour la construire. L'IA s'améliore à chaque requête.
                 </p>
             </section>
-
-            <!-- SLIDE 17: AVANTAGES CONCRETS (MODIFIED FROM OLD SLIDE 11) -->
-            <!-- <section
-                data-background-image='https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1920&auto=format&fit=crop'
-                data-background-opacity='0.12' data-auto-animate>
-                <h2>💡 Pourquoi Est-ce Révolutionnaire ?</h2>
-                <div style='text-align: left; max-width: 900px; margin: 0 auto;'>
-                    <div class='fragment'
-                        style='margin: 20px 0; padding: 20px; background: rgba(52, 152, 219, 0.2); border-left: 5px solid #3498db;'>
-                        <strong>💰 Économique</strong> : Investissement initial réduit, pas de refonte d'infrastructure
-                    </div>
-                    <div class='fragment'
-                        style='margin: 20px 0; padding: 20px; background: rgba(46, 204, 113, 0.2); border-left: 5px solid #2ecc71;'>
-                        <strong>🌱 Écologique</strong> : Jusqu'à -30% d'émissions de CO₂
-                    </div>
-                    <div class='fragment'
-                        style='margin: 20px 0; padding: 20px; background: rgba(243, 156, 18, 0.2); border-left: 5px solid #f39c12;'>
-                        <strong>🔄 Évolutif</strong> : Adaptation automatique et continue aux conditions du trafic
-                    </div>
-                    <div class='fragment'
-                        style='margin: 20px 0; padding: 20px; background: rgba(155, 89, 182, 0.2); border-left: 5px solid #9b59b6;'>
-                        <strong>🔮 Prédictif</strong> : Anticipation des pics (événements, heures de pointe, incidents)
-                    </div>
-                </div>
-            </section> -->
-
-            <!-- SLIDE 18: TECHNOLOGIES Àlì Bí (MODIFIED) -->
-            <!-- <section data-background-gradient='linear-gradient(to right, #834d9b, #d04ed6)' data-auto-animate>
-                <h2 data-id='main-key' style='margin-bottom: 15px;'>🛠️ Architecture Technique Àlì Bí</h2>
-                <h3 style='margin-bottom: 25px; color: #ddd; font-size: 1em;'>Les briques essentielles</h3>
-                <div
-                    style='display: grid; grid-template-columns: repeat(2, 1fr); gap: 35px; margin-top: 20px; max-width: 1050px; margin-left: auto; margin-right: auto;'>
-                    <div class='fragment'
-                        style='padding: 25px 30px; background: linear-gradient(145deg, rgba(52, 152, 219, 0.2), rgba(52, 152, 219, 0.05)); border-radius: 14px; border: 2px solid rgba(52, 152, 219, 0.4); box-shadow: 0 8px 24px rgba(0,0,0,0.3);'>
-                        <h3 style='font-size: 1.3em; margin-bottom: 20px;'>📊 Sources de Données</h3>
-                        <p style='font-size: 1.05em; margin: 15px 0;'>✅ <strong>API TomTom Traffic</strong></p>
-                        <p style='font-size: 0.9em; color: #ccc; margin-left: 30px; margin-top: 8px;'>Flux de trafic en
-                            temps réel</p>
-                        <p style='font-size: 1.05em; margin: 15px 0; margin-top: 22px;'>✅ <strong>Modélisation
-                                macroscopique</strong></p>
-                        <p style='font-size: 0.9em; color: #ccc; margin-left: 30px; margin-top: 8px;'>Adaptée aux
-                            données limitées</p>
-                    </div>
-                    <div class='fragment'
-                        style='padding: 25px 30px; background: linear-gradient(145deg, rgba(46, 204, 113, 0.2), rgba(46, 204, 113, 0.05)); border-radius: 14px; border: 2px solid rgba(46, 204, 113, 0.4); box-shadow: 0 8px 24px rgba(0,0,0,0.3);'>
-                        <h3 style='font-size: 1.3em; margin-bottom: 20px;'>🤖 Intelligence Artificielle</h3>
-                        <p style='font-size: 1.05em; margin: 15px 0;'>✅ <strong>Apprentissage par Renforcement</strong>
-                        </p>
-                        <p style='font-size: 0.9em; color: #ccc; margin-left: 30px; margin-top: 8px;'>Q-Learning, SARSA
-                            contextualisé</p>
-                        <p style='font-size: 1.05em; margin: 15px 0; margin-top: 22px;'>✅ <strong>Python +
-                                NumPy</strong></p>
-                        <p style='font-size: 0.9em; color: #ccc; margin-left: 30px; margin-top: 8px;'>Stack léger et
-                            performant</p>
-                    </div>
-                </div>
-                <p class='fragment' style='margin-top: 30px; font-size: 1em; color: #bbb; font-style: italic;'>
-                    💡 Une approche simple mais efficace pour des résultats concrets
-                </p>
-            </section> -->
-
-            <!-- SLIDE 13: ROADMAP/PLAN D'ACTION (MODIFIED) -->
-            <!-- <section
-                data-background-image='https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?q=80&w=1920&auto=format&fit=crop'
-                data-background-opacity='0.1'>
-                <h2>🗺️ Notre Feuille de Route</h2>
-                <h3 style='margin-bottom: 25px;'>D'Àlì Bí à la Transformation Complète</h3>
-                <div style='text-align: left; max-width: 850px; margin: 0 auto; font-size: 0.85em;'>
-                    <div class='fragment'
-                        style='margin: 12px 0; padding: 18px; background: rgba(52, 152, 219, 0.3); border-radius: 10px; border-left: 5px solid #3498db;'>
-                        <strong>PHASE 1 (Mois 1-3) : Àlì Bí v1.0 - Les Fondations</strong>
-                        <p style='margin-top: 8px; font-size: 0.95em;'>✅ Modélisation macroscopique + API TomTom •
-                            Algorithme d'apprentissage contextualisé<br>
-                            → Déploiement pilote sur un carrefour stratégique (ex : PK3, Cotonou)</p>
-                    </div>
-                    <div class='fragment'
-                        style='margin: 12px 0; padding: 18px; background: rgba(46, 204, 113, 0.3); border-radius: 10px; border-left: 5px solid #2ecc71;'>
-                        <strong>PHASE 2 (Mois 4-6) : Validation & Expansion</strong>
-                        <p style='margin-top: 8px; font-size: 0.95em;'>✅ Mesure rigoureuse de l'impact terrain •
-                            Calibrage des algorithmes<br>
-                            → Déploiement sur 3-5 carrefours additionnels</p>
-                    </div>
-                    <div class='fragment'
-                        style='margin: 12px 0; padding: 18px; background: rgba(243, 156, 18, 0.3); border-radius: 10px; border-left: 5px solid #f39c12;'>
-                        <strong>PHASE 3 (Mois 7-12) : Hybridation des Sources</strong>
-                        <p style='margin-top: 8px; font-size: 0.95em;'>✅ Déploiement de capteurs locaux • Fusion
-                            intelligente TomTom + capteurs dédiés<br>
-                            → Raffinement significatif de la précision</p>
-                    </div>
-                    <div class='fragment'
-                        style='margin: 12px 0; padding: 18px; background: rgba(155, 89, 182, 0.3); border-radius: 10px; border-left: 5px solid #9b59b6;'>
-                        <strong>PHASE 4 (Année 2+) : Montée en Granularité</strong>
-                        <p style='margin-top: 8px; font-size: 0.95em;'>✅ Enrichissement progressif du modèle •
-                            Intégration vision par ordinateur<br>
-                            → Évolution vers un jumeau numérique de haute fidélité</p>
-                    </div>
-                </div>
-                <p class='fragment' style='margin-top: 25px; font-size: 1.1em; color: var(--brand-primary);'>
-                    <strong>🎯 VISION : D'ici 3-5 ans, Cotonou disposera de son propre "City Brain".<br>
-                        ALI BI est le PREMIER PAS stratégique de cette transformation.</strong>
-                </p>
-            </section> -->
 
             <!-- SLIDE 14: IMPACT SOCIAL -->
             <!-- <section data-background-gradient='linear-gradient(120deg, #f093fb 0%, #f5576c 100%)'>
